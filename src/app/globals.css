@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  /* Groq exact color schema (using their exact HSL values) */
-  --color-base: hsl(45 14% 96%);
-  --color-surface: hsl(0 0% 100%);
-  --color-hover: hsl(45 14% 92%);
+  /* Verified groq.com color schema */
+  --color-base: #F3F3EE;
+  --color-surface: #FFFFFF;
+  --color-hover: #E8E8DE; /* Keeping an intermediate hover color based on groq if needed, or matching --color-base */
   
-  --color-brand: hsl(15 100% 56%);
-  --color-brand-hover: hsl(15 100% 45%);
+  --color-brand: #F43E01;
+  --color-brand-hover: #C23101;
   
-  --color-primary: hsl(0 0% 9%);
-  --color-secondary: hsl(0 0% 57%);
-  --color-inverse: hsl(0 0% 100%);
+  --color-primary: #2D2F33;
+  --color-secondary: #69695D;
+  --color-inverse: #FFFFFF;
   
-  --color-default: hsl(0 0% 92%);
+  --color-default: color-mix(in srgb, #000 20%, transparent);
 
   /* Font from Frontier Atlas (Inter) */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
