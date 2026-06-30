@@ -4,13 +4,15 @@ import * as React from "react";
 
 export function SpotlightWrapper({ children, className, style }: { children: React.ReactNode, className?: string, style?: React.CSSProperties }) {
   const divRef = React.useRef<HTMLDivElement>(null);
-  const [position, setPosition] = React.useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = React.useState(0);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!divRef.current) return;
     const rect = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    divRef.current.style.setProperty("--spot-x", `${x}px`);
+    divRef.current.style.setProperty("--spot-y", `${y}px`);
   };
 
   return (
@@ -26,7 +28,7 @@ export function SpotlightWrapper({ children, className, style }: { children: Rea
         className="pointer-events-none absolute -inset-px transition-opacity duration-300 z-0"
         style={{
           opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(245, 80, 54, 0.05), transparent 40%)`,
+          background: `radial-gradient(400px circle at var(--spot-x, 0px) var(--spot-y, 0px), rgba(245, 80, 54, 0.05), transparent 40%)`,
         }}
         aria-hidden="true"
       />
