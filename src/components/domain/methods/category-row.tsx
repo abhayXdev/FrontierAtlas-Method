@@ -30,7 +30,7 @@ export function CategoryRow({ category, index = 0 }: { category: MethodCategory,
           return (
             <li key={method.id}>
               <Link 
-                href={`/methods/${method.id}`}
+                href={`/methods/${slugify(method.name)}`}
                 className="group/badge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-full inline-block"
                 aria-label={`View papers using ${method.name}`}
               >
