@@ -148,5 +148,141 @@ export const mockMethodCategories: MethodCategory[] = [
       { id: "batch-normalization", name: "Batch Normalization" },
       { id: "dropout", name: "Dropout" }
     ],
+  },
+  {
+    id: "inference",
+    name: "Inference",
+    iconName: "Zap",
+    methods: [
+      { id: "kv-cache", name: "KV Cache" },
+      { id: "speculative-decoding", name: "Speculative Decoding" },
+      { id: "sliding-window-attention", name: "Sliding Window Attention" },
+      { id: "ttft", name: "TTFT" },
+      { id: "prefill", name: "Prefill" },
+      { id: "quantization", name: "Quantization" },
+      { id: "pruning", name: "Pruning" },
+      { id: "distillation", name: "Distillation" },
+      { id: "flash-attention", name: "Flash Attention" },
+      { id: "vllm", name: "vLLM" }
+    ]
+  },
+  {
+    id: "retrieval",
+    name: "Retrieval",
+    iconName: "Search",
+    methods: [
+      { id: "rag", name: "RAG" },
+      { id: "colbert", name: "ColBERT" },
+      { id: "reranker-(cross-encoder)", name: "Reranker (Cross-encoder)" },
+      { id: "bm25", name: "BM25" },
+      { id: "dense-retrieval", name: "Dense Retrieval" },
+      { id: "hybrid-search", name: "Hybrid Search" },
+      { id: "vector-search", name: "Vector Search" },
+      { id: "reranking", name: "ReRanking" },
+      { id: "embedding-search", name: "Embedding Search" },
+      { id: "context-retrieval", name: "Context Retrieval" }
+    ]
+  },
+  {
+    id: "reinforcement-learning",
+    name: "Reinforcement Learning",
+    iconName: "Trophy",
+    methods: [
+      { id: "ppo", name: "PPO" },
+      { id: "dpo", name: "DPO" },
+      { id: "rlhf", name: "RLHF" },
+      { id: "rlvr", name: "RLVR" },
+      { id: "grpo", name: "GRPO" },
+      { id: "online-rl", name: "Online RL" },
+      { id: "muzero", name: "MuZero" },
+      { id: "alphazero", name: "AlphaZero" },
+      { id: "reinforce", name: "REINFORCE" },
+      { id: "reward-model", name: "Reward Model" }
+    ]
+  },
+  {
+    id: "diffusion-generation",
+    name: "Diffusion & Generation",
+    iconName: "Sparkles",
+    methods: [
+      { id: "stable-diffusion", name: "Stable Diffusion" },
+      { id: "dit", name: "DiT" },
+      { id: "flow-matching", name: "Flow Matching" },
+      { id: "diffusion-policy", name: "Diffusion Policy" },
+      { id: "vae", name: "VAE" },
+      { id: "gan", name: "GAN" },
+      { id: "biggan", name: "BigGAN" },
+      { id: "score-based-models", name: "Score-Based Models" },
+      { id: "generative-adversarial-networks", name: "Generative Adversarial Networks" },
+      { id: "inpainting", name: "Inpainting" }
+    ]
+  },
+  {
+    id: "multimodal",
+    name: "Multimodal",
+    iconName: "LayoutGrid",
+    methods: [
+      { id: "llava", name: "LLaVA" },
+      { id: "blip", name: "BLIP" },
+      { id: "flamingo", name: "Flamingo" },
+      { id: "kosmos", name: "Kosmos" },
+      { id: "imagebind", name: "ImageBind" },
+      { id: "clip", name: "CLIP" },
+      { id: "video-llava", name: "Video-LLaVA" },
+      { id: "audioclip", name: "AudioCLIP" },
+      { id: "text-to-image", name: "Text-to-Image" },
+      { id: "text-to-video", name: "Text-to-Video" }
+    ]
+  },
+  {
+    id: "architectures",
+    name: "Architectures",
+    iconName: "Box",
+    methods: [
+      { id: "transformer", name: "Transformer" },
+      { id: "mamba", name: "Mamba" },
+      { id: "moe", name: "MoE" },
+      { id: "state-space-models", name: "State Space Models" },
+      { id: "cnn", name: "CNN" },
+      { id: "rnn", name: "RNN" },
+      { id: "lstm", name: "LSTM" },
+      { id: "gcn", name: "GCN" },
+      { id: "big-bird", name: "Big Bird" },
+      { id: "graph-neural-networks", name: "Graph Neural Networks" }
+    ]
+  },
+  {
+    id: "evaluation",
+    name: "Evaluation",
+    iconName: "CircleCheck",
+    methods: [
+      { id: "bleu", name: "BLEU" },
+      { id: "rouge", name: "ROUGE" },
+      { id: "pass@1", name: "Pass@1" },
+      { id: "llm-as-a-judge", name: "LLM-as-a-Judge" },
+      { id: "human-eval", name: "Human Eval" },
+      { id: "perplexity", name: "Perplexity" },
+      { id: "f1-score", name: "F1 Score" },
+      { id: "exact-match", name: "Exact Match" },
+      { id: "auc", name: "AUC" },
+      { id: "meteor", name: "METEOR" }
+    ]
+  },
+  {
+    id: "embeddings",
+    name: "Embeddings",
+    iconName: "Layers",
+    methods: [
+      { id: "word2vec", name: "word2vec" },
+      { id: "fasttext", name: "fastText" },
+      { id: "glove", name: "GloVe" },
+      { id: "elmo", name: "ELMo" },
+      { id: "bert-embedding", name: "BERT Embedding" },
+      { id: "sentence-transformer", name: "Sentence Transformer" },
+      { id: "openai-embedding", name: "OpenAI Embedding" },
+      { id: "cohere-embedding", name: "Cohere Embedding" },
+      { id: "embedding-models", name: "Embedding Models" },
+      { id: "dense-embedding", name: "Dense Embedding" }
+    ]
   }
 ];
