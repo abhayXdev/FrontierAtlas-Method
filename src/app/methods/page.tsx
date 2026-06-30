@@ -2,7 +2,7 @@ import { MethodsHero } from "@/components/domain/methods/methods-hero";
 import { CategoryRow } from "@/components/domain/methods/category-row";
 import { getMethodsTaxonomy } from "@/lib/api";
 
-export default async function HomePage() {
+export default async function MethodsPage() {
   const methodsTaxonomy = await getMethodsTaxonomy();
 
   return (
