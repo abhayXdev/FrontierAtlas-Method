@@ -4,7 +4,7 @@
   /* Verified groq.com color schema */
   --color-base: #F3F3EE;
   --color-surface: #FFFFFF;
-  --color-hover: #E8E8DE; /* Keeping an intermediate hover color based on groq if needed, or matching --color-base */
+  --color-hover: #E8E8DE; /* Verified groq hover state (--color-bg-section-91 / --color-utility-91-yellow) */
   
   --color-brand: #F43E01;
   --color-brand-hover: #C23101;
