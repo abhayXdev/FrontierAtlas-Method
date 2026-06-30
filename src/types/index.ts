@@ -6,5 +6,5 @@ export interface MethodCategory {
   id: string;
   name: string;
   iconName: IconName;
-  methods: string[];
+  methods: { id: string; name: string }[];
 }

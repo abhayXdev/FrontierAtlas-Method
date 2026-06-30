@@ -25,19 +25,17 @@ export function CategoryRow({ category, index = 0 }: { category: MethodCategory,
         <h3 className="text-[14px] font-bold text-text-main">{category.name}</h3>
       </div>
       
-      {/* Right Column: Methods Flow Grid */}
       <ul role="list" className="relative z-10 flex flex-wrap gap-2 flex-1 m-0 p-0 list-none">
         {category.methods.map((method) => {
-          const methodSlug = slugify(method);
           return (
-            <li key={method}>
+            <li key={method.id}>
               <Link 
-                href={`/methods/${methodSlug}`}
+                href={`/methods/${method.id}`}
                 className="group/badge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full inline-block"
-                aria-label={`View papers using ${method}`}
+                aria-label={`View papers using ${method.name}`}
               >
                 <Badge variant="default" className="group-hover/badge:border-primary/40">
-                  {method}
+                  {method.name}
                 </Badge>
               </Link>
             </li>
