@@ -11,7 +11,7 @@ export function CategoryRow({ category, index = 0 }: { category: MethodCategory,
 
   return (
     <SpotlightWrapper 
-      className="flex flex-col md:flex-row gap-4 md:gap-8 py-5 border-b border-border-subtle last:border-0 hover:bg-surface/50 transition-colors animate-fade-in-up"
+      className="flex flex-col md:flex-row gap-4 md:gap-8 py-5 -mx-2 px-2 border-b border-border-subtle last:border-0 hover:bg-surface/50 transition-colors animate-fade-in-up"
       style={{ animationDelay: `${staggerDelay}ms` }}
     >
       {/* Left Column: Icon and Title */}
