@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MethodCategory } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import { SpotlightWrapper } from "@/components/ui/spotlight-wrapper";
+import { slugify } from "@/lib/utils";
 
 export function CategoryRow({ category, index = 0 }: { category: MethodCategory, index?: number }) {
   const Icon = LucideIcons[category.iconName as keyof typeof LucideIcons] as React.ElementType | undefined;
@@ -27,7 +28,7 @@ export function CategoryRow({ category, index = 0 }: { category: MethodCategory,
       {/* Right Column: Methods Flow Grid */}
       <ul role="list" className="relative z-10 flex flex-wrap gap-2 flex-1 m-0 p-0 list-none">
         {category.methods.map((method) => {
-          const methodSlug = encodeURIComponent(method.toLowerCase().replace(/\s+/g, '-'));
+          const methodSlug = slugify(method);
           return (
             <li key={method}>
               <Link 
