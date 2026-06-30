@@ -1,29 +1,38 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #F8F7F2;
-  --color-surface: #FFFFFF;
+  /* Groq exact color schema (using their exact HSL values) */
+  --color-background: hsl(45 14% 96%);
   
-  --color-primary: #F55036;
-  --color-primary-hover: #E0462D;
+  --color-surface: hsl(0 0% 100%);
   
-  --color-text-main: #111111;
-  --color-text-muted: #555555;
-  --color-text-faint: #8B8B8B;
+  --color-primary: hsl(15 100% 56%);
+  --color-primary-hover: hsl(15 100% 45%);
   
-  --color-border-subtle: #E5E5E0;
-  --color-border-hover: #DCDCD7;
+  /* Restoring variable names used by UI components */
+  --color-text-main: hsl(0 0% 9%); /* Groq foreground */
+  --color-text-muted: hsl(0 0% 57%); /* Groq muted */
+  --color-text-faint: hsl(0 0% 75%);
   
-  --color-hoverBg: #F5F5F5;
+  --color-border-subtle: hsl(0 0% 92%); /* Groq border */
+  --color-border-hover: hsl(0 0% 85%);
+  
+  --color-hoverBg: hsl(45 14% 92%);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Font from Frontier Atlas (Inter) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif: "PT Serif", "Merriweather", ui-serif, Georgia, serif;
 }
 
 @layer base {
   body {
-    background-color: var(--color-background);
+    /* Groq's exact body background styling */
+    min-height: 100vh;
+    background: radial-gradient(circle at top left, rgba(255, 90, 31, 0.08), transparent 24%),
+                radial-gradient(circle at top right, rgba(255, 255, 255, 0.7), transparent 18%),
+                var(--color-background);
     color: var(--color-text-main);
+    letter-spacing: -0.01em;
   }
 }
 
