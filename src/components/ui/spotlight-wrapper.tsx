@@ -28,7 +28,7 @@ export function SpotlightWrapper({ children, className, style }: { children: Rea
         className="pointer-events-none absolute -inset-px transition-opacity duration-300 z-0"
         style={{
           opacity,
-          background: `radial-gradient(400px circle at var(--spot-x, 0px) var(--spot-y, 0px), rgba(245, 80, 54, 0.05), transparent 40%)`,
+          background: `radial-gradient(400px circle at var(--spot-x, 0px) var(--spot-y, 0px), rgba(244, 62, 1, 0.05), transparent 40%)`,
         }}
         aria-hidden="true"
       />
