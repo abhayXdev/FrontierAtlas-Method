@@ -7,7 +7,7 @@ export default function Loading() {
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-12 xl:px-20 pb-20">
         <MethodsHero />
         
-        <div className="flex flex-col mt-4 border-t border-border-subtle animate-pulse">
+        <div role="status" aria-label="Loading methods" className="flex flex-col mt-4 border-t border-border-subtle animate-pulse">
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <div key={i} className="flex flex-col md:flex-row gap-4 md:gap-8 py-5 border-b border-border-subtle">
               
@@ -17,13 +17,16 @@ export default function Loading() {
               </div>
               
               <div className="flex flex-wrap gap-2 flex-1">
-                {[1, 2, 3, 4, 5, 6, 7].map((j) => (
-                  <div 
-                    key={j} 
-                    className="h-7 bg-border-subtle rounded-full"
-                    style={{ width: `${Math.floor(Math.random() * 40) + 60}px` }}
-                  />
-                ))}
+                {[1, 2, 3, 4, 5, 6, 7].map((j) => {
+                  const widths = [72, 88, 64, 96, 80, 68, 92];
+                  return (
+                    <div 
+                      key={j} 
+                      className="h-7 bg-border-subtle rounded-full"
+                      style={{ width: `${widths[j % widths.length]}px` }}
+                    />
+                  );
+                })}
               </div>
 
             </div>
