@@ -12,17 +12,17 @@ export function CategoryRow({ category, index = 0 }: { category: MethodCategory,
 
   return (
     <SpotlightWrapper 
-      className="flex flex-col md:flex-row gap-4 md:gap-8 py-5 -mx-2 px-2 border-b border-border-subtle last:border-0 hover:bg-surface/50 transition-colors animate-fade-in-up"
+      className="flex flex-col md:flex-row gap-4 md:gap-8 py-5 -mx-2 px-2 border-b border-default last:border-0 hover:bg-surface/50 transition-colors animate-fade-in-up"
       style={{ animationDelay: `${staggerDelay}ms` }}
     >
       {/* Left Column: Icon and Title */}
       <div className="relative z-10 flex items-center gap-3 md:w-48 shrink-0 md:pt-1">
         {Icon ? (
           <div className="animate-pop-in" style={{ animationDelay: `${staggerDelay + 250}ms` }}>
-            <Icon className="w-[18px] h-[18px] text-primary" strokeWidth={1.5} aria-hidden="true" />
+            <Icon className="w-[18px] h-[18px] text-brand" strokeWidth={1.5} aria-hidden="true" />
           </div>
         ) : null}
-        <h3 className="text-[14px] font-bold text-text-main">{category.name}</h3>
+        <h3 className="text-[14px] font-bold text-primary">{category.name}</h3>
       </div>
       
       <ul role="list" className="relative z-10 flex flex-wrap gap-2 flex-1 m-0 p-0 list-none">
@@ -31,10 +31,10 @@ export function CategoryRow({ category, index = 0 }: { category: MethodCategory,
             <li key={method.id}>
               <Link 
                 href={`/methods/${method.id}`}
-                className="group/badge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full inline-block"
+                className="group/badge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-full inline-block"
                 aria-label={`View papers using ${method.name}`}
               >
-                <Badge variant="default" className="group-hover/badge:border-primary/40">
+                <Badge variant="default" className="group-hover/badge:border-brand/40">
                   {method.name}
                 </Badge>
               </Link>

@@ -7,9 +7,9 @@ export default function Loading() {
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-12 xl:px-20 pb-20">
         <MethodsHero />
         
-        <div role="status" aria-label="Loading methods" className="flex flex-col mt-4 border-t border-border-subtle animate-pulse">
+        <div role="status" aria-label="Loading methods" className="flex flex-col mt-4 border-t border-default animate-pulse">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="flex flex-col md:flex-row gap-4 md:gap-8 py-5 border-b border-border-subtle">
+            <div key={i} className="flex flex-col md:flex-row gap-4 md:gap-8 py-5 border-b border-default">
               
               <div className="flex items-center gap-3 md:w-48 shrink-0 md:pt-1">
                 <div className="w-[18px] h-[18px] bg-border-subtle rounded-sm" />

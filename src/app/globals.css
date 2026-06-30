@@ -2,26 +2,24 @@
 
 @theme {
   /* Groq exact color schema (using their exact HSL values) */
-  --color-background: hsl(45 14% 96%);
+  --color-bg-base: hsl(45 14% 96%);
+  --color-bg-surface: hsl(0 0% 100%);
+  --color-bg-hover: hsl(45 14% 92%);
   
-  --color-surface: hsl(0 0% 100%);
+  --color-brand: hsl(15 100% 56%);
+  --color-brand-hover: hsl(15 100% 45%);
   
-  --color-primary: hsl(15 100% 56%);
-  --color-primary-hover: hsl(15 100% 45%);
+  --color-text-primary: hsl(0 0% 9%);
+  --color-text-secondary: hsl(0 0% 57%);
+  --color-text-inverse: hsl(0 0% 100%);
   
-  /* Restoring variable names used by UI components */
-  --color-text-main: hsl(0 0% 9%); /* Groq foreground */
-  --color-text-muted: hsl(0 0% 57%); /* Groq muted */
-  --color-text-faint: hsl(0 0% 75%);
-  
-  --color-border-subtle: hsl(0 0% 92%); /* Groq border */
+  --color-border-default: hsl(0 0% 92%);
   --color-border-hover: hsl(0 0% 85%);
-  
-  --color-hoverBg: hsl(45 14% 92%);
 
   /* Font from Frontier Atlas (Inter) */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: "PT Serif", "Merriweather", ui-serif, Georgia, serif;
+  --font-serif: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 @layer base {
@@ -30,8 +28,8 @@
     min-height: 100vh;
     background: radial-gradient(circle at top left, rgba(255, 90, 31, 0.08), transparent 24%),
                 radial-gradient(circle at top right, rgba(255, 255, 255, 0.7), transparent 18%),
-                var(--color-background);
-    color: var(--color-text-main);
+                var(--color-bg-base);
+    color: var(--color-text-primary);
     letter-spacing: -0.01em;
   }
 }
@@ -78,7 +76,7 @@
     height: 2px;
     bottom: -2px;
     left: 0;
-    background-color: var(--color-primary);
+    background-color: var(--color-brand);
     transition: width 0.3s ease;
   }
   .link-underline:hover::after {
