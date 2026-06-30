@@ -1,21 +1,17 @@
-import { MethodsHero } from "@/components/domain/methods/methods-hero";
-import { CategoryRow } from "@/components/domain/methods/category-row";
-import { getMethodsTaxonomy } from "@/lib/api";
+import { FeedLayout } from "@/components/layout/feed-layout";
 
-export default async function HomePage() {
-  const methodsTaxonomy = await getMethodsTaxonomy();
-
+export default function HomePage() {
   return (
     <div className="w-full bg-surface min-h-[calc(100vh-60px)]">
-      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-12 xl:px-20 pb-20">
-        <MethodsHero />
-        <main className="flex flex-col mt-4 border-t border-border-subtle">
-          <h2 className="sr-only">Browse Methods by Category</h2>
-          {methodsTaxonomy.map((category, index) => (
-            <CategoryRow key={category.id} category={category} index={index} />
-          ))}
-        </main>
-      </div>
+      <FeedLayout
+        leftSidebar={<nav className="text-sm font-medium text-text-muted">Navigation placeholder</nav>}
+        rightSidebar={<aside className="text-sm text-text-muted">Sidebar placeholder</aside>}
+      >
+        <div className="py-12 md:py-24">
+          <h1 className="text-4xl font-bold tracking-tight text-text-main mb-4">Home feed — coming soon</h1>
+          <p className="text-text-muted">The main feed is under construction.</p>
+        </div>
+      </FeedLayout>
     </div>
   );
 }
