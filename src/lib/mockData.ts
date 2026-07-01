@@ -12,7 +12,7 @@ export const mockMethodCategories: MethodCategory[] = [
       { id: "multi-head-attention", name: "Multi-head Attention" },
       { id: "softmax", name: "Softmax" },
       { id: "layer-normalization", name: "Layer Normalization" },
-      { id: "mac-tuning", name: "Mac-tuning" },
+      { id: "mae-tuning", name: "Mae-tuning" },
       { id: "rlhf", name: "RLHF" },
       { id: "lora", name: "LoRA" },
       { id: "pre-training", name: "Pre-training" },
