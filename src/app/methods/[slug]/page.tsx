@@ -88,38 +88,60 @@ export default async function MethodDetailPage({
             </div>
             
             <div className="mb-10">
-              <span className="block text-[11px] font-bold text-secondary uppercase mb-2 tracking-[0.2em]">
-                Source
-              </span>
-              <div className="border border-default border-l-[3px] border-l-brand p-5 bg-surface rounded-r-md shadow-sm">
+              <div className="bg-surface border border-default border-l-[3px] border-l-brand p-5 rounded-r-md shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-2">
                 {sourcePaper ? (
-                  <div className="flex flex-col gap-1">
-                    <Link href={`/paper/${sourcePaper.id}`} className="text-primary font-bold text-lg hover:text-brand transition-colors">
-                      {sourcePaper.title}
-                    </Link>
-                    <span className="text-[13px] text-secondary font-medium">{sourcePaper.date.split('-')[0]}</span>
-                  </div>
+                  <>
+                    <div>
+                      <span className="block text-[11px] font-bold text-secondary uppercase mb-1 tracking-[0.2em]">PAPER</span>
+                      <Link href={`/paper/${sourcePaper.id}`} className="text-lg font-bold text-primary leading-snug hover:text-brand transition-colors">
+                        {sourcePaper.title}
+                      </Link>
+                      <div className="text-[13px] text-secondary mt-2">{sourcePaper.authors.slice(0, 4).join(", ")}{sourcePaper.authors.length > 4 ? " et al." : ""}</div>
+                    </div>
+                    <div className="flex flex-col items-end gap-2 shrink-0">
+                      <span className="bg-surface border border-default text-primary px-3 py-1 rounded-md text-[13px] font-semibold">{sourcePaper.date.split('-')[0]}</span>
+                      <Link href={`/paper/${sourcePaper.id}`} className="flex items-center gap-1 text-brand hover:underline text-[13px] font-medium mt-1">
+                        <FileText className="w-3.5 h-3.5" /> PDF
+                      </Link>
+                    </div>
+                  </>
                 ) : (
                   <span className="text-secondary text-sm">No source available</span>
                 )}
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 mt-2">
-              <div>
-                <span className="block text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+              <div className="bg-surface border border-default rounded-md p-4 text-center shadow-sm">
+                <span className="block text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-1">
                   Papers Using
                 </span>
-                <div className="text-3xl font-bold text-primary">
+                <div className="text-[28px] font-bold text-primary mt-1">
                   1,547
                 </div>
               </div>
-              <div>
-                <span className="block text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-2">
+              <div className="bg-surface border border-default rounded-md p-4 text-center shadow-sm">
+                <span className="block text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-1">
                   Introduced
                 </span>
-                <div className="text-3xl font-bold text-primary">
+                <div className="text-[28px] font-bold text-primary mt-1">
                   {sourcePaper ? sourcePaper.date.split('-')[0] : "2022"}
+                </div>
+              </div>
+              <div className="bg-surface border border-default rounded-md p-4 text-center shadow-sm">
+                <span className="block text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-1">
+                  Components
+                </span>
+                <div className="text-[28px] font-bold text-primary mt-1">
+                  4
+                </div>
+              </div>
+              <div className="bg-surface border border-default rounded-md p-4 text-center shadow-sm">
+                <span className="block text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-1">
+                  Repos
+                </span>
+                <div className="text-[28px] font-bold text-primary mt-1">
+                  24
                 </div>
               </div>
             </div>
@@ -127,8 +149,11 @@ export default async function MethodDetailPage({
 
           {/* Right Column */}
           <div className="lg:col-span-5 lg:sticky lg:top-24 self-start h-fit">
-            <div className="border border-default rounded-lg bg-surface shadow-sm min-h-[400px] flex flex-col p-2">
-              <div className="flex-1 flex flex-col items-center justify-center p-8 opacity-80">
+            <div className="border border-default rounded-lg bg-surface shadow-sm min-h-[400px] flex flex-col p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-[11px] font-bold tracking-[0.2em] text-secondary uppercase">ARCHITECTURE</h3>
+              </div>
+              <div className="flex-1 flex flex-col items-center justify-center py-8 opacity-80">
                 <div className="flex gap-8 items-center w-full max-w-md">
                   {/* Encoder Stack */}
                   <div className="flex flex-col gap-3 w-1/2">
