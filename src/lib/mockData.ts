@@ -1,4 +1,4 @@
-import { MethodCategory } from "@/types";
+import { MethodCategory, MethodDetail } from "@/types";
 
 export const mockMethodCategories: MethodCategory[] = [
   {
@@ -286,3 +286,60 @@ export const mockMethodCategories: MethodCategory[] = [
     ]
   }
 ];
+
+export const mockMethodDetails: Record<string, MethodDetail> = {
+  "llm": {
+    slug: "llm",
+    title: "Large Language Models (LLM)",
+    description: "Large Language Models are foundation models trained on massive amounts of text data to understand and generate human-like text.",
+    papers: [
+      {
+        id: "paper-1",
+        title: "Attention Is All You Need",
+        authors: ["Ashish Vaswani", "Noam Shazeer", "Niki Parmar", "Jakob Uszkoreit", "Llion Jones", "Aidan N. Gomez", "Lukasz Kaiser", "Illia Polosukhin"],
+        date: "2017-06-12",
+        abstract: "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks...",
+        citations: 104500,
+      },
+      {
+        id: "paper-2",
+        title: "Language Models are Few-Shot Learners",
+        authors: ["Tom B. Brown", "Benjamin Mann", "Nick Ryder", "Melanie Subbiah", "Jared Kaplan", "Prafulla Dhariwal", "Arvind Neelakantan", "Pranav Shyam", "Girish Sastry", "Amanda Askell", "Sandhini Agarwal", "Ariel Herbert-Voss", "Gretchen Krueger", "Tom Henighan", "Rewon Child", "Aditya Ramesh", "Daniel M. Ziegler", "Jeffrey Wu", "Clemens Winter", "Christopher Hesse", "Mark Chen", "Eric Sigler", "Mateusz Litwin", "Scott Gray", "Benjamin Chess", "Jack Clark", "Christopher Berner", "Sam McCandlish", "Alec Radford", "Ilya Sutskever", "Dario Amodei"],
+        date: "2020-05-28",
+        abstract: "We train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model...",
+        citations: 21300,
+      }
+    ]
+  },
+  "transformer": {
+    slug: "transformer",
+    title: "Transformer",
+    description: `The Transformer is a deep learning architecture introduced in the landmark 2017 paper "Attention Is All You Need" by Vaswani et al. Unlike previous recurrent neural networks (RNNs) and long short-term memory (LSTM) networks that process data sequentially, the Transformer relies entirely on self-attention mechanisms to draw global dependencies between inputs and outputs. This fundamental shift allowed for massive parallelization during training, dramatically reducing training times and paving the way for the scaling laws that define modern AI.
+
+At the core of the Transformer lies the encoder-decoder architecture. The encoder maps an input sequence of symbol representations to a sequence of continuous representations, while the decoder generates an output sequence one symbol at a time. Both the encoder and decoder are composed of stacks of identical layers. Each layer contains two primary sub-layers: a multi-head self-attention mechanism, and a simple, position-wise fully connected feed-forward network. Residual connections and layer normalization are applied around each of these sub-layers, ensuring stable gradient flow even in extremely deep networks.
+
+A key innovation of the Transformer is the Multi-Head Attention mechanism. Instead of performing a single attention function, the model linearly projects the queries, keys, and values multiple times with different, learned linear projections. Attention is then applied in parallel to each of these projected versions, yielding multiple output values that are concatenated and projected once more. This allows the model to jointly attend to information from different representation subspaces at different positions—something a single attention head struggles to accomplish without losing fidelity.
+
+Furthermore, because the Transformer abandons recurrence entirely, it has no inherent notion of sequence order. To inject information about the relative or absolute position of the tokens in the sequence, positional encodings are added to the input embeddings at the bottoms of the encoder and decoder stacks. These encodings use sine and cosine functions of different frequencies, allowing the model to easily learn to attend by relative positions since, for any fixed offset, the positional encoding can be represented as a linear function of another.
+
+The impact of the Transformer architecture on the field of Natural Language Processing (NLP) cannot be overstated. It serves as the foundational building block for nearly all state-of-the-art Large Language Models (LLMs) today, including the GPT (Generative Pre-trained Transformer) series, BERT, T5, and countless others. Beyond NLP, the architecture has proven surprisingly general and has been successfully adapted for computer vision (Vision Transformers), audio processing, and even reinforcement learning, solidifying its position as one of the most important architectural breakthroughs in the history of deep learning.`,
+    papers: [
+      {
+        id: "paper-1",
+        title: "Attention Is All You Need",
+        authors: ["Ashish Vaswani", "Noam Shazeer", "Niki Parmar", "Jakob Uszkoreit", "Llion Jones", "Aidan N. Gomez", "Lukasz Kaiser", "Illia Polosukhin"],
+        date: "2017-06-12",
+        abstract: "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks...",
+        citations: 104500,
+      },
+      {
+        id: "paper-3",
+        title: "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+        authors: ["Jacob Devlin", "Ming-Wei Chang", "Kenton Lee", "Kristina Toutanova"],
+        date: "2018-10-11",
+        abstract: "We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers...",
+        citations: 86400,
+      }
+    ]
+  }
+};

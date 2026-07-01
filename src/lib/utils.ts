@@ -8,3 +8,9 @@ export function cn(...inputs: ClassValue[]) {
 export function slugify(input: string): string {
   return encodeURIComponent(input.toLowerCase().replace(/\s+/g, '-'));
 }
+export function generateSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/[^a-z0-9-]/g, ""); // Remove non-alphanumeric characters except hyphens
+}

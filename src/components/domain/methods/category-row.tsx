@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MethodCategory } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import { SpotlightWrapper } from "@/components/ui/spotlight-wrapper";
-import { slugify } from "@/lib/utils";
+import { generateSlug } from "@/lib/utils";
 
 export function CategoryRow({ category }: { category: MethodCategory }) {
   const Icon = LucideIcons[category.iconName as keyof typeof LucideIcons] as React.ElementType | undefined;
@@ -26,7 +26,7 @@ export function CategoryRow({ category }: { category: MethodCategory }) {
           return (
             <li key={method.id}>
               <Link 
-                href={`/methods/${slugify(method.name)}`}
+                href={`/methods/${generateSlug(method.name)}`}
                 className="group/badge focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-full inline-block"
                 aria-label={`View papers using ${method.name}`}
               >
