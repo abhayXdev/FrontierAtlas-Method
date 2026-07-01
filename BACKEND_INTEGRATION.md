@@ -60,19 +60,24 @@ export interface MethodDetail {
 ```
 
 ## Step 3: Populate the New PapersWithCode Components
-We recently added "Applied Tasks" and "Top Implementations" sections to the bottom of the Method Detail page (`src/app/methods/[slug]/page.tsx`). These are currently hardcoded placeholders.
+The UI is now equipped with dynamic components for SOTA Results, Usage Trends, and general Metrics. These components have built-in graceful fallbacks if the backend data is absent, so you can adopt them one at a time.
 
-**To make them dynamic:**
-1. Update the `MethodDetail` interface in `src/types/index.ts` to accept these new arrays:
-   ```typescript
-   export interface MethodDetail {
-     // ... existing fields ...
-     tasks?: { name: string; count: number }[];
-     implementations?: { repo: string; framework: string; stars: number }[];
-   }
-   ```
-2. Feed real arrays from your backend through `api.ts`.
-3. Open `src/app/methods/[slug]/page.tsx` (this is the *only* UI file you need to touch). Scroll to the bottom ("Step 6") and map over your new arrays instead of the hardcoded JSX blocks. Look for the comments: `{/* Backend Team: Map your tasks data here */}`.
+**To make them fully dynamic, provide these arrays in your API response:**
+
+```typescript
+export interface MethodDetail {
+  // ... existing fields ...
+  tasks?: { name: string; count: number }[];
+  implementations?: { repo: string; framework: string; stars: number }[];
+  sotaResults?: { dataset: string; task: string; metric: string; score: string; model: string }[];
+  metrics?: { papersUsing: number; components: number; repos: number };
+  usageTrend?: { year: string; value: number }[];
+}
+```
+
+Additionally, the `MockPaper` interface now accepts an optional boolean `hasCode?: boolean;`. If you pass `hasCode: true`, the UI will automatically render a "Code Available" badge on the paper card.
+
+The `src/app/methods/[slug]/page.tsx` file handles this mapping automatically. You do **not** need to touch the JSX logic. Just provide the data via `api.ts` and the UI will hydrate!
 
 ## Step 4: Routing Strategy (SSG vs. ISR)
 Currently, the dynamic routes in Next.js use `generateStaticParams()` to pre-build a set of slugs at compile time. 

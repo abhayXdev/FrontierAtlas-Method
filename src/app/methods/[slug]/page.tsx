@@ -53,8 +53,28 @@ export default async function MethodDetailPage({
     { repo: "huggingface/transformers", framework: "PyTorch, JAX", stars: 120000 }
   ];
 
+  const fallbackMetrics = {
+    papersUsing: 1547,
+    components: 4,
+    repos: 24
+  };
+
+  const fallbackSota = [
+    { dataset: "LibriSpeech (test-other)", task: "ASR", metric: "WER", score: "2.1%", model: "Whisper large-v3" },
+    { dataset: "Common Voice 15.0", task: "Multilingual ASR", metric: "WER", score: "8.4%", model: "Whisper large-v3" }
+  ];
+
+  const fallbackUsageTrend = [
+    { year: "2022", value: 40 },
+    { year: "2023", value: 70 },
+    { year: "2024 (Est.)", value: 100 }
+  ];
+
   const tasksToRender = methodDetail.tasks && methodDetail.tasks.length > 0 ? methodDetail.tasks : fallbackTasks;
   const implementationsToRender = methodDetail.implementations && methodDetail.implementations.length > 0 ? methodDetail.implementations : fallbackImplementations;
+  const metricsToRender = methodDetail.metrics || fallbackMetrics;
+  const sotaToRender = methodDetail.sotaResults && methodDetail.sotaResults.length > 0 ? methodDetail.sotaResults : fallbackSota;
+  const usageTrendToRender = methodDetail.usageTrend && methodDetail.usageTrend.length > 0 ? methodDetail.usageTrend : fallbackUsageTrend;
 
   return (
     <div className="w-full bg-surface min-h-[calc(100vh-60px)]">
@@ -135,7 +155,7 @@ export default async function MethodDetailPage({
                   Papers Using
                 </span>
                 <div className="text-[28px] font-bold text-primary mt-1">
-                  1,547
+                  {metricsToRender.papersUsing.toLocaleString()}
                 </div>
               </div>
               <div className="bg-surface border border-default rounded-md p-4 text-center shadow-sm">
@@ -151,7 +171,7 @@ export default async function MethodDetailPage({
                   Components
                 </span>
                 <div className="text-[28px] font-bold text-primary mt-1">
-                  4
+                  {metricsToRender.components}
                 </div>
               </div>
               <div className="bg-surface border border-default rounded-md p-4 text-center shadow-sm">
@@ -159,7 +179,7 @@ export default async function MethodDetailPage({
                   Repos
                 </span>
                 <div className="text-[28px] font-bold text-primary mt-1">
-                  24
+                  {metricsToRender.repos}
                 </div>
               </div>
             </div>
@@ -179,9 +199,9 @@ export default async function MethodDetailPage({
                   <path d="M0,80 Q100,70 200,40 T400,10" fill="none" stroke="#2563EB" strokeWidth="2"></path>
                 </svg>
                 <div className="flex justify-between mt-2 font-mono text-[10px] text-secondary">
-                  <span>2022</span>
-                  <span>2023</span>
-                  <span>2024 (Est.)</span>
+                  {usageTrendToRender.map((trend, idx) => (
+                    <span key={idx}>{trend.year}</span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -244,20 +264,15 @@ export default async function MethodDetailPage({
                 </tr>
               </thead>
               <tbody className="divide-y divide-default">
-                <tr className="hover:bg-surface/50 transition-colors">
-                  <td className="px-6 py-3 text-[13px] font-semibold text-primary">LibriSpeech (test-other)</td>
-                  <td className="px-6 py-3 text-[13px] text-secondary">ASR</td>
-                  <td className="px-6 py-3 text-[13px] text-secondary">WER</td>
-                  <td className="px-6 py-3 text-[13px] font-bold text-brand">2.1%</td>
-                  <td className="px-6 py-3 text-[13px] text-secondary">Whisper large-v3</td>
-                </tr>
-                <tr className="hover:bg-surface/50 transition-colors">
-                  <td className="px-6 py-3 text-[13px] font-semibold text-primary">Common Voice 15.0</td>
-                  <td className="px-6 py-3 text-[13px] text-secondary">Multilingual ASR</td>
-                  <td className="px-6 py-3 text-[13px] text-secondary">WER</td>
-                  <td className="px-6 py-3 text-[13px] font-bold text-brand">8.4%</td>
-                  <td className="px-6 py-3 text-[13px] text-secondary">Whisper large-v3</td>
-                </tr>
+                {sotaToRender.map((sota, idx) => (
+                  <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                    <td className="px-6 py-3 text-[13px] font-semibold text-primary">{sota.dataset}</td>
+                    <td className="px-6 py-3 text-[13px] text-secondary">{sota.task}</td>
+                    <td className="px-6 py-3 text-[13px] text-secondary">{sota.metric}</td>
+                    <td className="px-6 py-3 text-[13px] font-bold text-brand">{sota.score}</td>
+                    <td className="px-6 py-3 text-[13px] text-secondary">{sota.model}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -325,10 +340,12 @@ export default async function MethodDetailPage({
                     <Code className="w-3.5 h-3.5" />
                     {(paper.citations * 3 + 150).toLocaleString()} Stars
                   </Badge>
-                  <Badge variant="outline" className="flex items-center gap-1.5 font-medium hover:text-brand hover:border-brand cursor-pointer transition-colors bg-surface/50">
-                    <Code className="w-3.5 h-3.5" />
-                    Code Available
-                  </Badge>
+                  {paper.hasCode && (
+                    <Badge variant="outline" className="flex items-center gap-1.5 font-medium hover:text-brand hover:border-brand cursor-pointer transition-colors bg-surface/50">
+                      <Code className="w-3.5 h-3.5" />
+                      Code Available
+                    </Badge>
+                  )}
                 </div>
               </CardContent>
             </Card>

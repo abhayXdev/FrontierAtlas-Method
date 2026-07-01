@@ -16,6 +16,7 @@ export interface MockPaper {
   date: string;
   abstract: string;
   citations: number;
+  hasCode?: boolean;
 }
 
 export interface MethodDetail {
@@ -25,4 +26,7 @@ export interface MethodDetail {
   papers: MockPaper[];
   tasks?: { name: string; count: number }[];
   implementations?: { repo: string; framework: string; stars: number }[];
+  sotaResults?: { dataset: string; task: string; metric: string; score: string; model: string }[];
+  metrics?: { papersUsing: number; components: number; repos: number };
+  usageTrend?: { year: string; value: number }[];
 }
