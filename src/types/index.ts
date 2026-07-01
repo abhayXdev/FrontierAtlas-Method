@@ -17,6 +17,7 @@ export interface MockPaper {
   abstract: string;
   citations: number;
   hasCode?: boolean;
+  stars?: number;
 }
 
 export interface MethodDetail {
@@ -29,4 +30,6 @@ export interface MethodDetail {
   sotaResults?: { dataset: string; task: string; metric: string; score: string; model: string }[];
   metrics?: { papersUsing: number; components: number; repos: number };
   usageTrend?: { year: string; value: number }[];
+  sourceUrl?: string;
+  architectureUrl?: string;
 }

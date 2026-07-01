@@ -214,32 +214,36 @@ export default async function MethodDetailPage({
                 <h3 className="text-[11px] font-bold tracking-[0.2em] text-secondary uppercase">ARCHITECTURE</h3>
               </div>
               <div className="flex-1 flex flex-col items-center justify-center py-8 opacity-80">
-                <div className="flex gap-8 items-center w-full max-w-md">
-                  {/* Encoder Stack */}
-                  <div className="flex flex-col gap-3 w-1/2">
-                    <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Encoder Block</div>
-                    <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Encoder Block</div>
-                    <div className="text-center text-secondary leading-none py-1">⋮</div>
-                    <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Encoder Block</div>
+                {methodDetail.architectureUrl ? (
+                  <img src={methodDetail.architectureUrl} alt={`${methodDetail.title} Architecture`} className="w-full max-w-md h-auto object-contain rounded-md shadow-sm" />
+                ) : (
+                  <div className="flex gap-8 items-center w-full max-w-md">
+                    {/* Encoder Stack */}
+                    <div className="flex flex-col gap-3 w-1/2">
+                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Encoder Block</div>
+                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Encoder Block</div>
+                      <div className="text-center text-secondary leading-none py-1">⋮</div>
+                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Encoder Block</div>
+                    </div>
+                    
+                    {/* Connection Arrow */}
+                    <div className="flex-1 h-px bg-default relative">
+                       <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-px border-t-[4px] border-b-[4px] border-l-[6px] border-transparent border-l-default"></div>
+                    </div>
+                    
+                    {/* Decoder Stack */}
+                    <div className="flex flex-col gap-3 w-1/2">
+                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Decoder Block</div>
+                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Decoder Block</div>
+                      <div className="text-center text-secondary leading-none py-1">⋮</div>
+                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Decoder Block</div>
+                    </div>
                   </div>
-                  
-                  {/* Connection Arrow */}
-                  <div className="flex-1 h-px bg-default relative">
-                     <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-px border-t-[4px] border-b-[4px] border-l-[6px] border-transparent border-l-default"></div>
-                  </div>
-                  
-                  {/* Decoder Stack */}
-                  <div className="flex flex-col gap-3 w-1/2">
-                    <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Decoder Block</div>
-                    <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Decoder Block</div>
-                    <div className="text-center text-secondary leading-none py-1">⋮</div>
-                    <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Decoder Block</div>
-                  </div>
-                </div>
+                )}
               </div>
               <div className="mt-4 border-t border-default pt-3 pb-2 w-full text-center">
-                <Link href="#" className="text-[11px] font-mono text-secondary hover:text-brand hover:underline">
-                  https://example.com/method/{resolvedParams.slug}
+                <Link href={methodDetail.sourceUrl || "#"} className="text-[11px] font-mono text-secondary hover:text-brand hover:underline">
+                  {methodDetail.sourceUrl ? methodDetail.sourceUrl.replace(/^https?:\/\//, '') : `https://example.com/method/${resolvedParams.slug}`}
                 </Link>
               </div>
             </div>
@@ -338,7 +342,7 @@ export default async function MethodDetailPage({
                   </Badge>
                   <Badge variant="outline" className="flex items-center gap-1.5 font-medium">
                     <Code className="w-3.5 h-3.5" />
-                    {(paper.citations * 3 + 150).toLocaleString()} Stars
+                    {(paper.stars ?? (paper.citations * 3 + 150)).toLocaleString()} Stars
                   </Badge>
                   {paper.hasCode && (
                     <Badge variant="outline" className="flex items-center gap-1.5 font-medium hover:text-brand hover:border-brand cursor-pointer transition-colors bg-surface/50">
