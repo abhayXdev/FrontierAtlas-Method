@@ -23,7 +23,7 @@ export function Navbar() {
         
         {/* Mobile Search Overlay (Takes over navbar completely on mobile when active) */}
         {isMobileSearchOpen && (
-          <div className="absolute inset-0 flex items-center px-4 bg-surface z-50 md:hidden animate-in fade-in slide-in-from-right-4 duration-200">
+          <div className="absolute inset-0 flex items-center px-4 bg-surface z-50 md:hidden">
             <button 
               type="button" 
               className="text-secondary hover:text-primary mr-3"
@@ -109,7 +109,7 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown Overlay */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-[60px] left-0 right-0 z-40 bg-surface border-b border-default shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="lg:hidden fixed top-[60px] left-0 right-0 bottom-0 z-40 bg-surface border-b border-default shadow-xl overflow-y-auto">
           <div className="flex flex-col px-4 py-6 space-y-6">
             <ul role="list" className="flex flex-col space-y-2 text-[16px] font-bold text-primary m-0 p-0 list-none">
               <li><Link href="#" className="hover:text-brand transition-colors block py-3 border-b border-default/50" onClick={() => setIsMobileMenuOpen(false)}>Explore</Link></li>
