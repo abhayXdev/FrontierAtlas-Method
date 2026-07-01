@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { SpotlightWrapper } from "@/components/ui/spotlight-wrapper";
 import { slugify } from "@/lib/utils";
 
-export function CategoryRow({ category, index = 0 }: { category: MethodCategory, index?: number }) {
+export function CategoryRow({ category }: { category: MethodCategory }) {
   const Icon = LucideIcons[category.iconName as keyof typeof LucideIcons] as React.ElementType | undefined;
 
   return (

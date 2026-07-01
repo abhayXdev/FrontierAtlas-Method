@@ -11,8 +11,8 @@ export default async function MethodsPage() {
         <MethodsHero />
         <main className="flex flex-col mt-4 border-t border-default">
           <h2 className="sr-only">Browse Methods by Category</h2>
-          {methodsTaxonomy.map((category, index) => (
-            <CategoryRow key={category.id} category={category} index={index} />
+          {methodsTaxonomy.map((category) => (
+            <CategoryRow key={category.id} category={category} />
           ))}
         </main>
       </div>
