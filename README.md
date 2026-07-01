@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FrontierAtlas Methods Library
 
-## Getting Started
+This is the FrontierAtlas Methods page repository — a methods library similar to paperswithcode.com, built specifically for the Frontier Atlas platform.
 
-First, run the development server:
+## Tech Stack
+- **Framework:** Next.js 16
+- **UI:** React 19
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Icons:** lucide-react
 
-```bash
+## How to run locally
+``bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+``
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
+- src/app/methods/page.tsx: The main methods page
+- src/components/domain/methods/: Domain-specific components (CategoryRow, MethodsHero)
+- src/components/ui/: Reusable UI components (Badge, SpotlightWrapper)
+- src/lib/api.ts: Data fetching functions
+- src/lib/mockData.ts: Mock taxonomy data for development
+- src/lib/utils.ts: Utility functions (cn, slugify)
+- src/types/index.ts: Shared TypeScript types (e.g., MethodCategory)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Integration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To swap the mock data for a real backend API, you only need to update the getMethodsTaxonomy() function in src/lib/api.ts. This is the single integration point. It must return a Promise<MethodCategory[]> matching the type defined in src/types/index.ts.
 
-## Learn More
+### MethodCategory Interface
+``typescript
+export interface MethodCategory {
+  id: string; // Unique identifier for the category
+  name: string; // Display name of the category
+  iconName: string; // Name of the Lucide icon to display
+  methods: Array<{
+    id: string; // Unique identifier for the method
+    name: string; // Display name of the method
+  }>;
+}
+``
 
-To learn more about Next.js, take a look at the following resources:
+## Design Tokens
+All design tokens and colors are centralized in the src/app/globals.css @theme block. These have been verified against the official groq.com palette. The typography uses the Inter font to match frontieratlas.co.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Note on Completeness
+The /methods page is complete and pixel-perfect to the reference specification. Other pages such as /, /methods/[slug], and /paper/[id] are currently stubs and are meant for other team members to implement.

@@ -8,7 +8,7 @@ import { slugify } from "@/lib/utils";
 
 export function CategoryRow({ category, index = 0 }: { category: MethodCategory, index?: number }) {
   const Icon = LucideIcons[category.iconName as keyof typeof LucideIcons] as React.ElementType | undefined;
-  const staggerDelay = Math.min(index * 100 + 150, 1500);
+  const staggerDelay = Math.min(index * 100 + 150, 1500); // 150ms base delay + 100ms per row, capped at 1500ms so late rows don't wait too long
 
   return (
     <SpotlightWrapper 
