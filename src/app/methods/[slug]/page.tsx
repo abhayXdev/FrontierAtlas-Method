@@ -88,25 +88,43 @@ export default async function MethodDetailPage({
             </div>
             
             <div className="mb-10">
-              <div className="bg-surface border border-default border-l-[3px] border-l-brand p-5 rounded-r-md shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-2">
-                {sourcePaper ? (
-                  <>
-                    <div>
-                      <span className="block text-[11px] font-bold text-secondary uppercase mb-1 tracking-[0.2em]">PAPER</span>
-                      <Link href={`/paper/${sourcePaper.id}`} className="text-lg font-bold text-primary leading-snug hover:text-brand transition-colors">
-                        {sourcePaper.title}
-                      </Link>
-                      <div className="text-[13px] text-secondary mt-2">{sourcePaper.authors.slice(0, 4).join(", ")}{sourcePaper.authors.length > 4 ? " et al." : ""}</div>
-                    </div>
-                    <div className="flex flex-col items-end gap-2 shrink-0">
-                      <span className="bg-surface border border-default text-primary px-3 py-1 rounded-md text-[13px] font-semibold">{sourcePaper.date.split('-')[0]}</span>
-                      <Link href={`/paper/${sourcePaper.id}`} className="flex items-center gap-1 text-brand hover:underline text-[13px] font-medium mt-1">
-                        <FileText className="w-3.5 h-3.5" /> PDF
-                      </Link>
-                    </div>
-                  </>
-                ) : (
-                  <span className="text-secondary text-sm">No source available</span>
+              <div className="bg-surface border border-default border-l-[3px] border-l-brand p-5 rounded-r-md shadow-sm">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                  {sourcePaper ? (
+                    <>
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="block text-[11px] font-bold text-secondary uppercase tracking-[0.2em]">PAPER</span>
+                          <span className="bg-primary text-inverse px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-tighter">Official</span>
+                        </div>
+                        <Link href={`/paper/${sourcePaper.id}`} className="text-lg font-bold text-primary leading-snug hover:text-brand transition-colors">
+                          {sourcePaper.title}
+                        </Link>
+                        <div className="text-[13px] text-secondary mt-2">{sourcePaper.authors.slice(0, 4).join(", ")}{sourcePaper.authors.length > 4 ? " et al." : ""}</div>
+                      </div>
+                      <div className="flex flex-col items-end gap-2 shrink-0">
+                        <span className="bg-surface border border-default text-primary px-3 py-1 rounded-md text-[13px] font-semibold">{sourcePaper.date.split('-')[0]}</span>
+                        <div className="flex items-center gap-3 mt-1">
+                          <Link href={`/paper/${sourcePaper.id}`} className="flex items-center gap-1 text-brand hover:underline text-[13px] font-medium">
+                            <FileText className="w-3.5 h-3.5" /> PDF
+                          </Link>
+                          <Link href={`#`} className="flex items-center gap-1 text-primary hover:text-brand transition-colors text-[13px] font-medium">
+                            <Code className="w-3.5 h-3.5" /> Code
+                          </Link>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <span className="text-secondary text-sm">No source available</span>
+                  )}
+                </div>
+                {sourcePaper && (
+                  <div className="border-t border-default pt-4 mt-4">
+                    <ExpandableDescription 
+                      text={sourcePaper.abstract} 
+                      className="text-sm text-secondary leading-relaxed" 
+                    />
+                  </div>
                 )}
               </div>
             </div>
@@ -142,6 +160,28 @@ export default async function MethodDetailPage({
                 </span>
                 <div className="text-[28px] font-bold text-primary mt-1">
                   24
+                </div>
+              </div>
+            </div>
+
+            {/* Usage Trend Chart */}
+            <div className="mt-8 bg-surface border border-default rounded-lg p-6 shadow-sm">
+              <div className="text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-6">Usage Trend</div>
+              <div className="h-48 w-full relative">
+                <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 100">
+                  <defs>
+                    <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stopColor="#2563EB" stopOpacity="0.5"></stop>
+                      <stop offset="100%" stopColor="#2563EB" stopOpacity="0"></stop>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,100 L0,80 Q100,70 200,40 T400,10 L400,100 Z" fill="url(#chartGradient)"></path>
+                  <path d="M0,80 Q100,70 200,40 T400,10" fill="none" stroke="#2563EB" strokeWidth="2"></path>
+                </svg>
+                <div className="flex justify-between mt-2 font-mono text-[10px] text-secondary">
+                  <span>2022</span>
+                  <span>2023</span>
+                  <span>2024 (Est.)</span>
                 </div>
               </div>
             </div>
@@ -183,6 +223,43 @@ export default async function MethodDetailPage({
                 </Link>
               </div>
             </div>
+          </div>
+        </div>
+
+
+        {/* SOTA Table */}
+        <div className="bg-surface border border-default rounded-lg mb-8 overflow-hidden shadow-sm">
+          <div className="px-6 py-4 border-b border-default bg-surface/50">
+            <h3 className="text-[11px] font-bold tracking-[0.2em] text-secondary uppercase">State of the Art Results</h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-surface/30">
+                  <th className="px-6 py-3 text-[10px] font-bold text-secondary uppercase tracking-widest border-b border-default">Dataset</th>
+                  <th className="px-6 py-3 text-[10px] font-bold text-secondary uppercase tracking-widest border-b border-default">Task</th>
+                  <th className="px-6 py-3 text-[10px] font-bold text-secondary uppercase tracking-widest border-b border-default">Metric</th>
+                  <th className="px-6 py-3 text-[10px] font-bold text-secondary uppercase tracking-widest border-b border-default">Score</th>
+                  <th className="px-6 py-3 text-[10px] font-bold text-secondary uppercase tracking-widest border-b border-default">Model</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-default">
+                <tr className="hover:bg-surface/50 transition-colors">
+                  <td className="px-6 py-3 text-[13px] font-semibold text-primary">LibriSpeech (test-other)</td>
+                  <td className="px-6 py-3 text-[13px] text-secondary">ASR</td>
+                  <td className="px-6 py-3 text-[13px] text-secondary">WER</td>
+                  <td className="px-6 py-3 text-[13px] font-bold text-brand">2.1%</td>
+                  <td className="px-6 py-3 text-[13px] text-secondary">Whisper large-v3</td>
+                </tr>
+                <tr className="hover:bg-surface/50 transition-colors">
+                  <td className="px-6 py-3 text-[13px] font-semibold text-primary">Common Voice 15.0</td>
+                  <td className="px-6 py-3 text-[13px] text-secondary">Multilingual ASR</td>
+                  <td className="px-6 py-3 text-[13px] text-secondary">WER</td>
+                  <td className="px-6 py-3 text-[13px] font-bold text-brand">8.4%</td>
+                  <td className="px-6 py-3 text-[13px] text-secondary">Whisper large-v3</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
@@ -247,6 +324,10 @@ export default async function MethodDetailPage({
                   <Badge variant="outline" className="flex items-center gap-1.5 font-medium">
                     <Code className="w-3.5 h-3.5" />
                     {(paper.citations * 3 + 150).toLocaleString()} Stars
+                  </Badge>
+                  <Badge variant="outline" className="flex items-center gap-1.5 font-medium hover:text-brand hover:border-brand cursor-pointer transition-colors bg-surface/50">
+                    <Code className="w-3.5 h-3.5" />
+                    Code Available
                   </Badge>
                 </div>
               </CardContent>
