@@ -72,10 +72,19 @@ export interface MethodDetail {
   sotaResults?: { dataset: string; task: string; metric: string; score: string; model: string }[];
   metrics?: { papersUsing: number; components: number; repos: number };
   usageTrend?: { year: string; value: number }[];
+  sourceUrl?: string; // e.g. "https://openai.com/research/whisper"
+  architectureUrl?: string; // Optional image URL for the architecture diagram
 }
 ```
 
-Additionally, the `MockPaper` interface now accepts an optional boolean `hasCode?: boolean;`. If you pass `hasCode: true`, the UI will automatically render a "Code Available" badge on the paper card.
+Additionally, the `MockPaper` interface now accepts optional `hasCode` and `stars` properties:
+```typescript
+export interface MockPaper {
+  // ... existing fields
+  hasCode?: boolean; // Renders a "Code Available" badge
+  stars?: number; // Real GitHub stars (falls back to a mock calculation if missing)
+}
+```
 
 The `src/app/methods/[slug]/page.tsx` file handles this mapping automatically. You do **not** need to touch the JSX logic. Just provide the data via `api.ts` and the UI will hydrate!
 
