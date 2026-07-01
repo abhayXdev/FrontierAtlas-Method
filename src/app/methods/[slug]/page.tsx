@@ -76,6 +76,16 @@ export default async function MethodDetailPage({
   const sotaToRender = methodDetail.sotaResults && methodDetail.sotaResults.length > 0 ? methodDetail.sotaResults : fallbackSota;
   const usageTrendToRender = methodDetail.usageTrend && methodDetail.usageTrend.length > 0 ? methodDetail.usageTrend : fallbackUsageTrend;
 
+  // Dynamically calculate SVG paths for the graph based on the backend data
+  const maxTrendValue = Math.max(...usageTrendToRender.map(t => t.value), 1);
+  const trendPoints = usageTrendToRender.map((t, idx) => {
+    const x = usageTrendToRender.length > 1 ? (idx / (usageTrendToRender.length - 1)) * 400 : 200;
+    const y = 90 - (t.value / maxTrendValue) * 80; // keep it within 10-90 bounds
+    return `${x},${y}`;
+  });
+  const trendLinePath = `M ${trendPoints.join(' L ')}`;
+  const trendAreaPath = `${trendLinePath} L 400,100 L 0,100 Z`;
+
   return (
     <div className="w-full bg-surface min-h-[calc(100vh-60px)]">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -195,8 +205,8 @@ export default async function MethodDetailPage({
                       <stop offset="100%" stopColor="#2563EB" stopOpacity="0"></stop>
                     </linearGradient>
                   </defs>
-                  <path d="M0,100 L0,80 Q100,70 200,40 T400,10 L400,100 Z" fill="url(#chartGradient)"></path>
-                  <path d="M0,80 Q100,70 200,40 T400,10" fill="none" stroke="#2563EB" strokeWidth="2"></path>
+                  <path d={trendAreaPath} fill="url(#chartGradient)"></path>
+                  <path d={trendLinePath} fill="none" stroke="#2563EB" strokeWidth="2"></path>
                 </svg>
                 <div className="flex justify-between mt-2 font-mono text-[10px] text-secondary">
                   {usageTrendToRender.map((trend, idx) => (
