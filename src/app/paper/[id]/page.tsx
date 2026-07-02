@@ -20,11 +20,9 @@ export default async function PaperDetailPage({
   }
 
   // Format date to "Dec 6, 2017" style if it's YYYY-MM-DD
-  const formattedDate = new Date(paper.publicationDate).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
-  });
+  const formattedDate = paper.publicationDate 
+    ? new Date(paper.publicationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    : "Unknown Date";
 
   return (
     <main className="w-full max-w-5xl mx-auto py-10 px-4 space-y-10">
@@ -49,7 +47,7 @@ export default async function PaperDetailPage({
         
         <div className="space-y-4">
           <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight text-brand leading-[1.15]">
-            {paper.title}
+            {paper.title || "Untitled Paper"}
           </h1>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px] font-medium text-secondary">
             <span className="flex items-center gap-1.5">
@@ -59,11 +57,11 @@ export default async function PaperDetailPage({
             <span>•</span>
             <span className="flex items-center gap-1.5">
               <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-              {paper.citations.toLocaleString()} Citations
+              {(paper.citations || 0).toLocaleString()} Citations
             </span>
           </div>
           <div className="text-[14px] font-medium text-primary mt-2">
-            By: {paper.authors.join(", ")}
+            By: {(paper.authors || []).length > 0 ? (paper.authors || []).join(", ") : "Unknown Author"}
           </div>
         </div>
 
