@@ -2,11 +2,11 @@ import * as React from "react";
 import Link from "next/link";
 import { getMethodDetailBySlug } from "@/lib/api";
 import { mockMethodDetails, mockMethodCategories } from "@/lib/mockData";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { FileText, Code, ChevronRight } from "lucide-react";
 import { ExpandableDescription } from "@/components/ui/expandable-description";
 import { generateSlug } from "@/lib/utils";
+import { PapersFeed } from "@/components/domain/methods/papers-feed";
+import { SotaTable } from "@/components/domain/methods/sota-table";
 
 export async function generateStaticParams() {
   const existingKeys = Object.keys(mockMethodDetails);
@@ -30,15 +30,16 @@ export default async function MethodDetailPage({
     return <div className="p-12 text-center text-primary">Method not found. Please check the API fallback generator.</div>;
   }
 
-  const sourcePaper = methodDetail.papers.length > 0 ? methodDetail.papers[0] : null;
+  const sourcePaper = methodDetail.papers && methodDetail.papers.length > 0 ? methodDetail.papers[0] : null;
 
   // Find the category this method belongs to, to get related methods
   let relatedMethods: string[] = ["WaveNet", "Conformer", "Spectrogram", "TDT"]; // Fallback
   const category = mockMethodCategories.find(cat => cat.methods.some(m => m.id === resolvedParams.slug));
+  const categoryName = category ? category.name : "Language";
   if (category) {
     relatedMethods = category.methods
       .filter(m => m.id !== resolvedParams.slug)
-      .slice(0, 4)
+      .slice(0, 5)
       .map(m => m.name);
   }
 
@@ -61,7 +62,11 @@ export default async function MethodDetailPage({
 
   const fallbackSota = [
     { dataset: "LibriSpeech (test-other)", task: "ASR", metric: "WER", score: "2.1%", model: "Whisper large-v3" },
-    { dataset: "Common Voice 15.0", task: "Multilingual ASR", metric: "WER", score: "8.4%", model: "Whisper large-v3" }
+    { dataset: "Common Voice 15.0", task: "Multilingual ASR", metric: "WER", score: "8.4%", model: "Whisper large-v3" },
+    { dataset: "Switchboard (Hub5'00)", task: "ASR", metric: "WER", score: "4.2%", model: "Conformer-RNNT" },
+    { dataset: "VoxCeleb1", task: "Speaker Verification", metric: "EER", score: "0.68%", model: "ECAPA-TDNN" },
+    { dataset: "LRS3-TED", task: "Audio-Visual ASR", metric: "WER", score: "1.7%", model: "AV-HuBERT" },
+    { dataset: "AudioSet", task: "Audio Classification", metric: "mAP", score: "0.493", model: "AST" }
   ];
 
   const fallbackUsageTrend = [
@@ -76,330 +81,152 @@ export default async function MethodDetailPage({
   const sotaToRender = methodDetail.sotaResults && methodDetail.sotaResults.length > 0 ? methodDetail.sotaResults : fallbackSota;
   const usageTrendToRender = methodDetail.usageTrend && methodDetail.usageTrend.length > 0 ? methodDetail.usageTrend : fallbackUsageTrend;
 
-  // Dynamically calculate SVG paths for the graph based on the backend data
-  const maxTrendValue = Math.max(...usageTrendToRender.map(t => t.value), 1);
-  const trendPoints = usageTrendToRender.map((t, idx) => {
-    const x = usageTrendToRender.length > 1 ? (idx / (usageTrendToRender.length - 1)) * 400 : 200;
-    const y = 90 - (t.value / maxTrendValue) * 80; // keep it within 10-90 bounds
-    return `${x},${y}`;
-  });
-  const trendLinePath = `M ${trendPoints.join(' L ')}`;
-  const trendAreaPath = `${trendLinePath} L 400,100 L 0,100 Z`;
-
   return (
-    <div className="w-full bg-surface min-h-[calc(100vh-60px)]">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="w-full bg-[#F3F3EE] min-h-[calc(100vh-60px)]">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 py-10">
         
-        {/* Step 2: Breadcrumbs */}
-        <nav className="flex items-center text-sm font-medium text-secondary mb-8">
-          <Link href="/methods" className="hover:text-brand transition-colors">
-            Methods
-          </Link>
-          <ChevronRight className="w-4 h-4 mx-2 text-default" />
-          <span className="text-primary">{methodDetail.title}</span>
-        </nav>
+        {/* Breadcrumbs */}
+        <div className="flex items-center gap-2 text-[13px] text-secondary mb-10">
+          <Link href="/methods" className="hover:text-primary transition-colors">Methods</Link>
+          <ChevronRight className="w-3.5 h-3.5" />
+          <Link href={`/methods?category=${categoryName.toLowerCase()}`} className="hover:text-primary transition-colors">{categoryName}</Link>
+          <ChevronRight className="w-3.5 h-3.5" />
+          <span className="text-primary font-medium">{methodDetail.title}</span>
+        </div>
 
-        {/* Step 3: Top Hero Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-8 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           
-          {/* Left Column */}
-          <div className="lg:col-span-7 flex flex-col">
-            <span className="text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-4">
-              Method
-            </span>
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-primary mb-6">
-              {methodDetail.title}
-            </h1>
-            <div className="mb-8">
-              <ExpandableDescription 
-                text={methodDetail.description} 
-                className="text-sm md:text-[15px] text-secondary leading-relaxed max-w-[90%]" 
-              />
-            </div>
+          {/* Left Column (Content) */}
+          <div className="lg:col-span-8 flex flex-col gap-10">
             
-            <div className="mb-10">
-              <div className="bg-surface border border-default border-l-[3px] border-l-brand p-5 rounded-r-md shadow-sm">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
-                  {sourcePaper ? (
-                    <>
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="block text-[11px] font-bold text-secondary uppercase tracking-[0.2em]">PAPER</span>
-                          <span className="bg-primary text-inverse px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-tighter">Official</span>
-                        </div>
-                        <Link href={`/paper/${sourcePaper.id}`} className="text-lg font-bold text-primary leading-snug hover:text-brand transition-colors">
-                          {sourcePaper.title}
-                        </Link>
-                        <div className="text-[13px] text-secondary mt-2">{sourcePaper.authors.slice(0, 4).join(", ")}{sourcePaper.authors.length > 4 ? " et al." : ""}</div>
+            {/* Hero Section */}
+            <div>
+              <h4 className="text-[11px] font-semibold text-secondary tracking-widest uppercase mb-2">Method</h4>
+              <h1 className="text-[48px] font-bold text-primary tracking-tight leading-tight mb-4">
+                {methodDetail.title}
+              </h1>
+              <div className="text-base text-secondary mb-6 max-w-3xl leading-relaxed">
+                <ExpandableDescription text={methodDetail.description} />
+              </div>
+              
+              {/* Main Paper Card */}
+              {sourcePaper && (
+                <div className="bg-surface border border-[#E1E1D7] rounded-lg p-4 flex flex-col gap-2">
+                  <div className="flex justify-between items-start">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] font-semibold bg-gray-100 text-gray-600 px-2 py-0.5 rounded tracking-widest uppercase">Paper</span>
+                        <span className="text-[11px] font-semibold bg-black text-white px-2 py-0.5 rounded tracking-widest uppercase">Official</span>
                       </div>
-                      <div className="flex flex-col items-end gap-2 shrink-0">
-                        <span className="bg-surface border border-default text-primary px-3 py-1 rounded-md text-[13px] font-semibold">{sourcePaper.date.split('-')[0]}</span>
-                        <div className="flex items-center gap-3 mt-1">
-                          <Link href={`/paper/${sourcePaper.id}`} className="flex items-center gap-1 text-brand hover:underline text-[13px] font-medium">
-                            <FileText className="w-3.5 h-3.5" /> PDF
-                          </Link>
-                          <Link href={`#`} className="flex items-center gap-1 text-primary hover:text-brand transition-colors text-[13px] font-medium">
-                            <Code className="w-3.5 h-3.5" /> Code
-                          </Link>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <span className="text-secondary text-sm">No source available</span>
-                  )}
-                </div>
-                {sourcePaper && (
-                  <div className="border-t border-default pt-4 mt-4">
-                    <ExpandableDescription 
-                      text={sourcePaper.abstract} 
-                      className="text-sm text-secondary leading-relaxed" 
-                    />
+                      <Link href={`/paper/${sourcePaper.id}`}>
+                        <h3 className="text-xl font-bold text-primary mt-1 hover:text-brand transition-colors">{sourcePaper.title}</h3>
+                      </Link>
+                      <p className="text-[13px] text-secondary">{sourcePaper.authors.slice(0, 4).join(", ")}{sourcePaper.authors.length > 4 ? " et al." : ""}</p>
+                    </div>
+                    <span className="text-[12px] font-medium text-secondary">{sourcePaper.date.split('-')[0]}</span>
                   </div>
-                )}
+                  <div className="text-[13px] text-secondary mt-2 line-clamp-2">
+                    {sourcePaper.abstract}
+                  </div>
+                  <div className="flex items-center gap-4 mt-2">
+                    <Link href={`/paper/${sourcePaper.id}`} className="flex items-center gap-1 text-[11px] font-semibold text-brand hover:underline">
+                      <FileText className="w-3.5 h-3.5" /> PDF
+                    </Link>
+                    <Link href="#" className="flex items-center gap-1 text-[11px] font-semibold text-secondary hover:text-primary transition-colors">
+                      <Code className="w-3.5 h-3.5" /> Code
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Metrics Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-surface border border-[#E1E1D7] rounded-lg p-4 flex flex-col items-center justify-center text-center">
+                <span className="text-[11px] font-semibold text-secondary uppercase tracking-wider mb-2">Papers Using</span>
+                <span className="text-3xl font-bold text-primary">{metricsToRender.papersUsing.toLocaleString()}</span>
+              </div>
+              <div className="bg-surface border border-[#E1E1D7] rounded-lg p-4 flex flex-col items-center justify-center text-center">
+                <span className="text-[11px] font-semibold text-secondary uppercase tracking-wider mb-2">Introduced</span>
+                <span className="text-3xl font-bold text-primary">{sourcePaper ? sourcePaper.date.split('-')[0] : "2022"}</span>
+              </div>
+              <div className="bg-surface border border-[#E1E1D7] rounded-lg p-4 flex flex-col items-center justify-center text-center">
+                <span className="text-[11px] font-semibold text-secondary uppercase tracking-wider mb-2">Components</span>
+                <span className="text-3xl font-bold text-primary">{metricsToRender.components}</span>
+              </div>
+              <div className="bg-surface border border-[#E1E1D7] rounded-lg p-4 flex flex-col items-center justify-center text-center">
+                <span className="text-[11px] font-semibold text-secondary uppercase tracking-wider mb-2">Repos</span>
+                <span className="text-3xl font-bold text-primary">{metricsToRender.repos}</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
-              <div className="bg-surface border border-default rounded-md p-4 text-center shadow-sm">
-                <span className="block text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-1">
-                  Papers Using
-                </span>
-                <div className="text-[28px] font-bold text-primary mt-1">
-                  {metricsToRender.papersUsing.toLocaleString()}
-                </div>
-              </div>
-              <div className="bg-surface border border-default rounded-md p-4 text-center shadow-sm">
-                <span className="block text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-1">
-                  Introduced
-                </span>
-                <div className="text-[28px] font-bold text-primary mt-1">
-                  {sourcePaper ? sourcePaper.date.split('-')[0] : "2022"}
-                </div>
-              </div>
-              <div className="bg-surface border border-default rounded-md p-4 text-center shadow-sm">
-                <span className="block text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-1">
-                  Components
-                </span>
-                <div className="text-[28px] font-bold text-primary mt-1">
-                  {metricsToRender.components}
-                </div>
-              </div>
-              <div className="bg-surface border border-default rounded-md p-4 text-center shadow-sm">
-                <span className="block text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-1">
-                  Repos
-                </span>
-                <div className="text-[28px] font-bold text-primary mt-1">
-                  {metricsToRender.repos}
-                </div>
-              </div>
-            </div>
-
-            {/* Usage Trend Chart */}
-            <div className="mt-8 bg-surface border border-default rounded-lg p-6 shadow-sm">
-              <div className="text-[11px] font-bold tracking-[0.2em] text-secondary uppercase mb-6">Usage Trend</div>
-              <div className="h-48 w-full relative">
-                <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 100">
-                  <defs>
-                    <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0%" stopColor="#2563EB" stopOpacity="0.5"></stop>
-                      <stop offset="100%" stopColor="#2563EB" stopOpacity="0"></stop>
-                    </linearGradient>
-                  </defs>
-                  <path d={trendAreaPath} fill="url(#chartGradient)"></path>
-                  <path d={trendLinePath} fill="none" stroke="#2563EB" strokeWidth="2"></path>
+            {/* Usage Trend Chart (Visual Placeholder matched to Stitch) */}
+            <div className="bg-surface border border-[#E1E1D7] rounded-lg p-4">
+              <h4 className="text-[11px] font-semibold text-secondary uppercase tracking-wider mb-6">Usage Trend</h4>
+              <div className="h-48 w-full bg-gradient-to-t from-blue-50/50 to-white relative flex items-end rounded-b-md overflow-hidden">
+                <svg className="w-full h-full absolute inset-0" preserveAspectRatio="none" viewBox="0 0 100 100">
+                  <path d="M0,100 L0,80 Q25,75 50,60 T100,20 L100,100 Z" fill="rgba(59, 130, 246, 0.05)" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="2"></path>
                 </svg>
-                <div className="flex justify-between mt-2 font-mono text-[10px] text-secondary">
-                  {usageTrendToRender.map((trend, idx) => (
-                    <span key={idx}>{trend.year}</span>
-                  ))}
+                <div className="w-full flex justify-between text-[11px] font-semibold text-secondary z-10 pb-1 px-1">
+                  <span>{usageTrendToRender[0]?.year || '2017'}</span>
+                  <span>{usageTrendToRender[1]?.year || '2020'}</span>
+                  <span>{usageTrendToRender[usageTrendToRender.length-1]?.year || '2024 (Est.)'}</span>
                 </div>
               </div>
             </div>
+
+            {/* SOTA Table */}
+            <SotaTable results={sotaToRender} />
+
+            {/* Related Methods */}
+            <div>
+              <h4 className="text-[11px] font-semibold text-secondary uppercase tracking-wider mb-4">Related Methods</h4>
+              <div className="flex flex-wrap gap-2">
+                {relatedMethods.map((method, idx) => (
+                  <Link key={method} href={`/methods/${generateSlug(method)}`}>
+                    <span className={`px-3 py-1.5 border border-[#E1E1D7] rounded-full text-[11px] font-semibold cursor-pointer transition-colors ${idx < 3 ? 'text-brand bg-white hover:bg-[#E8E8DE]' : 'text-secondary bg-white hover:bg-[#E8E8DE]'}`}>
+                      {method}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Step 5: Papers Feed */}
+            <PapersFeed papers={methodDetail.papers} methodTitle={methodDetail.title} />
+
           </div>
 
-          {/* Right Column */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24 self-start h-fit">
-            <div className="border border-default rounded-lg bg-surface shadow-sm min-h-[400px] flex flex-col p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-[11px] font-bold tracking-[0.2em] text-secondary uppercase">ARCHITECTURE</h3>
-              </div>
-              <div className="flex-1 flex flex-col items-center justify-center py-8 opacity-80">
+          {/* Right Column (Sidebar) */}
+          <div className="lg:col-span-4 flex flex-col gap-10">
+            {/* Architecture Diagram */}
+            <div className="bg-surface border border-[#E1E1D7] rounded-lg p-4 sticky top-24">
+              <h4 className="text-[11px] font-semibold text-secondary uppercase tracking-wider mb-6">Architecture</h4>
+              <div className="flex flex-col items-center gap-4 py-6 border border-[#E1E1D7] rounded bg-[#F3F3EE]/30 relative overflow-hidden">
                 {methodDetail.architectureUrl ? (
-                  <img src={methodDetail.architectureUrl} alt={`${methodDetail.title} Architecture`} className="w-full max-w-md h-auto object-contain rounded-md shadow-sm" />
+                  <img src={methodDetail.architectureUrl} alt={`${methodDetail.title} Architecture`} className="w-full h-auto object-contain" />
                 ) : (
-                  <div className="flex gap-8 items-center w-full max-w-md">
-                    {/* Encoder Stack */}
-                    <div className="flex flex-col gap-3 w-1/2">
-                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Encoder Block</div>
-                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Encoder Block</div>
-                      <div className="text-center text-secondary leading-none py-1">⋮</div>
-                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Encoder Block</div>
+                  <>
+                    <div className="w-4/5 grid grid-cols-2 gap-4 relative z-10">
+                      <div className="border border-[#E1E1D7] bg-white rounded p-3 text-center text-[11px] font-semibold text-secondary">Encoder Block</div>
+                      <div className="border border-[#E1E1D7] bg-white rounded p-3 text-center text-[11px] font-semibold text-secondary">Decoder Block</div>
+                      <div className="border border-[#E1E1D7] bg-white rounded p-3 text-center text-[11px] font-semibold text-secondary">Encoder Block</div>
+                      <div className="border border-[#E1E1D7] bg-white rounded p-3 text-center text-[11px] font-semibold text-secondary">Decoder Block</div>
+                      <div className="text-center font-bold text-secondary">⋮</div>
+                      <div className="text-center font-bold text-secondary">⋮</div>
+                      <div className="border border-[#E1E1D7] bg-white rounded p-3 text-center text-[11px] font-semibold text-secondary">Encoder Block</div>
+                      <div className="border border-[#E1E1D7] bg-white rounded p-3 text-center text-[11px] font-semibold text-secondary">Decoder Block</div>
                     </div>
-                    
-                    {/* Connection Arrow */}
-                    <div className="flex-1 h-px bg-default relative">
-                       <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-px border-t-[4px] border-b-[4px] border-l-[6px] border-transparent border-l-default"></div>
-                    </div>
-                    
-                    {/* Decoder Stack */}
-                    <div className="flex flex-col gap-3 w-1/2">
-                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Decoder Block</div>
-                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Decoder Block</div>
-                      <div className="text-center text-secondary leading-none py-1">⋮</div>
-                      <div className="bg-surface border border-default p-3 text-center text-xs font-medium text-secondary rounded-sm shadow-sm">Decoder Block</div>
-                    </div>
-                  </div>
+                    {/* Animated Data Pulse behind the grid */}
+                    <div className="absolute top-1/2 -translate-y-1/2 left-0 h-[2px] w-12 bg-brand rounded-full shadow-[0_0_8px_rgba(244,62,1,0.8)] blur-[1px] animate-flow-data z-0"></div>
+                  </>
                 )}
               </div>
-              <div className="mt-4 border-t border-default pt-3 pb-2 w-full text-center">
-                <Link href={methodDetail.sourceUrl || "#"} className="text-[11px] font-mono text-secondary hover:text-brand hover:underline">
-                  {methodDetail.sourceUrl ? methodDetail.sourceUrl.replace(/^https?:\/\//, '') : `https://example.com/method/${resolvedParams.slug}`}
+              <div className="mt-4 pt-4 border-t border-[#E1E1D7] text-center">
+                <Link href={methodDetail.sourceUrl || "#"} className="text-[11px] font-medium text-secondary hover:text-brand break-all transition-colors">
+                  {methodDetail.sourceUrl ? methodDetail.sourceUrl.replace(/^https?:\/\//, '') : `https://arxiv.org/abs/1706.03762`}
                 </Link>
               </div>
-            </div>
-          </div>
-        </div>
-
-
-        {/* SOTA Table */}
-        <div className="bg-surface border border-default rounded-lg mb-8 overflow-hidden shadow-sm">
-          <div className="px-6 py-4 border-b border-default bg-surface/50">
-            <h3 className="text-[11px] font-bold tracking-[0.2em] text-secondary uppercase">State of the Art Results</h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-surface/30">
-                  <th className="px-6 py-3 text-[10px] font-bold text-secondary uppercase tracking-widest border-b border-default">Dataset</th>
-                  <th className="px-6 py-3 text-[10px] font-bold text-secondary uppercase tracking-widest border-b border-default">Task</th>
-                  <th className="px-6 py-3 text-[10px] font-bold text-secondary uppercase tracking-widest border-b border-default">Metric</th>
-                  <th className="px-6 py-3 text-[10px] font-bold text-secondary uppercase tracking-widest border-b border-default">Score</th>
-                  <th className="px-6 py-3 text-[10px] font-bold text-secondary uppercase tracking-widest border-b border-default">Model</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-default">
-                {sotaToRender.map((sota, idx) => (
-                  <tr key={idx} className="hover:bg-surface/50 transition-colors">
-                    <td className="px-6 py-3 text-[13px] font-semibold text-primary">{sota.dataset}</td>
-                    <td className="px-6 py-3 text-[13px] text-secondary">{sota.task}</td>
-                    <td className="px-6 py-3 text-[13px] text-secondary">{sota.metric}</td>
-                    <td className="px-6 py-3 text-[13px] font-bold text-brand">{sota.score}</td>
-                    <td className="px-6 py-3 text-[13px] text-secondary">{sota.model}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Step 4: Full-Width Metadata Bands */}
-        <div className="border border-default rounded-md p-4 flex flex-wrap items-center gap-3 mb-10 bg-surface shadow-sm">
-          <span className="text-[11px] font-bold text-secondary uppercase mr-2 tracking-widest">
-            Related Methods
-          </span>
-          {relatedMethods.map((method) => (
-            <Link key={method} href={`/methods/${generateSlug(method)}`}>
-              <Badge variant="outline" className="border-default rounded-md bg-surface hover:border-brand hover:text-brand transition-colors cursor-pointer text-xs py-1 px-3">
-                {method}
-              </Badge>
-            </Link>
-          ))}
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-default pb-4 mb-8 gap-4">
-          <div className="flex items-center gap-3">
-            <button className="px-3 py-1 text-[13px] font-bold bg-primary text-inverse rounded-[4px] transition-colors">
-              trending
-            </button>
-            <button className="px-3 py-1 text-[13px] font-medium text-secondary hover:text-primary transition-colors">
-              newest
-            </button>
-            <button className="px-3 py-1 text-[13px] font-medium text-secondary hover:text-primary transition-colors">
-              most cited
-            </button>
-          </div>
-          <div className="text-[13px] text-secondary font-medium font-mono">
-            {methodDetail.papers.length} papers using {methodDetail.title}
-          </div>
-        </div>
-
-        {/* Step 5: Papers Feed */}
-        <div className="flex flex-col">
-          {methodDetail.papers.map((paper) => (
-            <Card 
-              key={paper.id} 
-              className="border-0 border-t border-default bg-transparent shadow-none rounded-none py-6 px-0 hover:bg-surface/50 transition-colors first:border-t-0"
-            >
-              <CardHeader className="p-0 mb-3">
-                <CardTitle className="text-xl">
-                  <Link href={`/paper/${paper.id}`} className="hover:text-brand transition-colors">
-                    {paper.title}
-                  </Link>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <p className="text-sm text-secondary mb-3">
-                  {paper.authors.join(", ")} • {paper.date}
-                </p>
-                <p className="text-primary text-sm line-clamp-2 mb-4">
-                  {paper.abstract}
-                </p>
-                
-                <div className="flex items-center gap-3">
-                  <Badge variant="outline" className="flex items-center gap-1.5 font-medium">
-                    <FileText className="w-3.5 h-3.5" />
-                    {paper.citations.toLocaleString()} Citations
-                  </Badge>
-                  <Badge variant="outline" className="flex items-center gap-1.5 font-medium">
-                    <Code className="w-3.5 h-3.5" />
-                    {(paper.stars ?? (paper.citations * 3 + 150)).toLocaleString()} Stars
-                  </Badge>
-                  {paper.hasCode && (
-                    <Badge variant="outline" className="flex items-center gap-1.5 font-medium hover:text-brand hover:border-brand cursor-pointer transition-colors bg-surface/50">
-                      <Code className="w-3.5 h-3.5" />
-                      Code Available
-                    </Badge>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Step 6: Code Implementations & Models (PWC Style) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 pt-8 border-t border-default">
-          {/* Tasks Section */}
-          <div>
-            <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
-               Applied Tasks
-            </h3>
-            <div className="flex flex-col gap-2">
-               {tasksToRender.map((task, idx) => (
-                 <div key={idx} className="flex justify-between items-center p-3 border border-default hover:border-brand transition-colors cursor-pointer bg-surface/50">
-                   <span className="text-sm font-semibold text-primary">{task.name}</span>
-                   <span className="text-xs text-secondary">{task.count} papers</span>
-                 </div>
-               ))}
-            </div>
-          </div>
-
-          {/* Top Implementations Section */}
-          <div>
-            <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
-               Top Implementations
-            </h3>
-            <div className="flex flex-col gap-2">
-               {implementationsToRender.map((impl, idx) => (
-                 <div key={idx} className="flex justify-between items-center p-3 border border-default hover:border-brand transition-colors cursor-pointer bg-surface/50">
-                   <div className="flex flex-col">
-                     <span className="text-sm font-semibold text-primary">{impl.repo}</span>
-                     <span className="text-xs text-secondary">{impl.framework}</span>
-                   </div>
-                   <Badge variant="outline" className="flex items-center gap-1">
-                     <Code className="w-3 h-3" /> {impl.stars >= 1000 ? `${(impl.stars / 1000).toFixed(0)}k` : impl.stars}
-                   </Badge>
-                 </div>
-               ))}
             </div>
           </div>
         </div>

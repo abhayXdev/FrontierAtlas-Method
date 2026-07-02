@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Frontier Atlas - Methods Directory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#f43e01",
+                        "on-tertiary-fixed": "#1b1c13",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#fafaf5",
+                        "on-primary-container": "#fffbff",
+                        "background": "#fafaf5",
+                        "surface-container": "#eeeee9",
+                        "inverse-on-surface": "#f1f1ec",
+                        "secondary-fixed-dim": "#c6c6cb",
+                        "surface-container-highest": "#e3e3de",
+                        "inverse-primary": "#ffb4a1",
+                        "tertiary-fixed-dim": "#c8c7b9",
+                        "on-background": "#1a1c19",
+                        "on-tertiary-container": "#fffdee",
+                        "on-surface-variant": "#5d4038",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f4f4ef",
+                        "on-primary-fixed-variant": "#891e00",
+                        "secondary-container": "#dfdfe4",
+                        "surface": "#fafaf5",
+                        "outline-variant": "#e7bdb3",
+                        "surface-container-high": "#e8e8e3",
+                        "tertiary-container": "#757569",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#da3600",
+                        "secondary": "#5d5e63",
+                        "tertiary": "#5c5d51",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#ffb4a1",
+                        "on-secondary-fixed-variant": "#45474b",
+                        "on-surface": "#1a1c19",
+                        "on-secondary-container": "#616267",
+                        "on-secondary-fixed": "#1a1c1f",
+                        "inverse-surface": "#2f312e",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#b32b00",
+                        "surface-dim": "#dadad5",
+                        "surface-variant": "#e3e3de",
+                        "on-primary-fixed": "#3c0800",
+                        "on-tertiary-fixed-variant": "#47473d",
+                        "on-primary": "#ffffff",
+                        "outline": "#e5e7eb",
+                        "tertiary-fixed": "#e5e3d4",
+                        "primary-fixed": "#ffdbd2",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#e2e2e7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "2xl": "64px",
+                        "container-max": "1280px",
+                        "xl": "40px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "unit": "4px",
+                        "gutter": "20px",
+                        "lg": "24px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "body-sm": ["13px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+                        "label-sm": ["11px", {"lineHeight": "1", "letterSpacing": "0.03em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #fafaf5;
+        }
+        .surface-white {
+            background-color: #FFFFFF;
+        }
+        .hairline-border {
+            border-color: #e5e7eb;
+            border-width: 1px;
+        }
+        .hover-fill:hover {
+            background-color: #f3f4f6;
+        }
+        .text-primary-dark {
+            color: #1a1c19;
+        }
+        .pill-tag {
+            border: 1px solid #e5e7eb;
+            border-radius: 9999px;
+            padding: 4px 12px;
+            font-size: 13px;
+            color: #4b5563;
+            background-color: #ffffff;
+            transition: all 0.2s;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .pill-tag:hover {
+            border-color: #d1d5db;
+            background-color: #f9fafb;
+            color: #111827;
+        }
+        .category-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 24px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .category-row:last-child {
+            border-bottom: none;
+        }
+        .category-icon {
+            color: #f43e01;
+            margin-right: 12px;
+            font-size: 24px;
+        }
+        .category-title {
+            width: 200px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: #1a1c19;
+            font-size: 14px;
+        }
+        .methods-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            flex-grow: 1;
+        }
+        .hero-bg {
+            background-image: radial-gradient(circle at right center, rgba(244, 62, 1, 0.05) 0%, transparent 50%);
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .hero-mesh {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 50%;
+            background-image: 
+                linear-gradient(to right, rgba(244, 62, 1, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(244, 62, 1, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            mask-image: radial-gradient(circle at right center, black 0%, transparent 70%);
+            -webkit-mask-image: radial-gradient(circle at right center, black 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="text-primary-dark font-body-lg text-body-lg min-h-screen flex flex-col bg-background">
+<!-- TopNavBar Component -->
+<header class="bg-surface-container-lowest border-b border-outline fixed top-0 w-full z-50 h-16 flex items-center justify-between px-xl max-w-container-max mx-auto left-0 right-0">
+<div class="flex items-center">
+<div class="font-display text-headline-md tracking-tighter text-on-surface mr-xl flex items-center">
+<span class="text-primary font-bold mr-1">FA</span> Frontier Atlas
+            </div>
+</div>
+<div class="flex-grow flex justify-center px-lg">
+<div class="relative w-full max-w-2xl">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[20px]">search</span>
+<input class="w-full pl-10 pr-12 py-2 text-body-sm font-body-sm bg-surface-container-low border border-outline rounded-md focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary focus:border-primary text-on-surface" placeholder="Search papers, authors, topics, benchmarks..." type="text"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center bg-surface-container-lowest border border-outline rounded px-1.5 py-0.5 shadow-sm text-xs text-secondary font-medium font-sans">
+<span class="text-[10px] mr-0.5">⌘</span>K
+                </div>
+</div>
+</div>
+<div class="flex items-center">
+<nav class="hidden md:flex items-center gap-md mr-md">
+<a class="text-secondary font-medium font-body-sm text-body-sm hover:text-on-surface transition-colors" href="#">Explore</a>
+<a class="text-secondary font-medium font-body-sm text-body-sm hover:text-on-surface transition-colors" href="#">Rankings</a>
+<a class="text-secondary font-medium font-body-sm text-body-sm hover:text-on-surface transition-colors" href="#">Tasks</a>
+<a class="text-primary font-medium font-body-sm text-body-sm" href="#">Methods</a>
+<a class="text-secondary font-medium font-body-sm text-body-sm hover:text-on-surface transition-colors" href="#">About</a>
+</nav>
+<div class="flex items-center gap-sm border-l border-outline pl-md ml-xs">
+<button class="text-secondary hover:text-on-surface transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+<button class="w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center font-medium text-xs ml-2 hover:bg-surface-container-low transition-colors">
+                    JP
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Layout -->
+<div class="flex-grow pt-2xl mt-xl pb-2xl w-full max-w-[1200px] mx-auto px-lg">
+<!-- Hero / Header -->
+<div class="relative mb-xl pt-lg pb-xl border-b border-outline overflow-hidden">
+<div class="hero-bg"></div>
+<div class="hero-mesh"></div>
+<div class="relative z-10 max-w-2xl">
+<h3 class="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold mb-md">METHODS LIBRARY</h3>
+<h1 class="font-display text-[48px] leading-[1.1] tracking-tight text-on-surface mb-sm font-semibold">Explore All<br/>AI Methods</h1>
+<p class="font-body-md text-body-md text-secondary mt-lg max-w-md">A comprehensive collection of AI methods across all domains and applications.</p>
+</div>
+</div>
+<!-- Methods High-Density List -->
+<main class="w-full">
+<div class="flex flex-col">
+<!-- Category: General -->
+<div class="category-row">
+<div class="category-title">
+<span class="material-symbols-outlined category-icon">settings</span>
+                    General
+                </div>
+<div class="methods-container">
+<div class="pill-tag">LLM</div>
+<div class="pill-tag">Transformer</div>
+<div class="pill-tag">Fine-tuning</div>
+<div class="pill-tag">Multi-head Attention</div>
+<div class="pill-tag">Softmax</div>
+<div class="pill-tag">Layer Normalization</div>
+<div class="pill-tag">Mae-tuning</div>
+<div class="pill-tag">RLHF</div>
+<div class="pill-tag">LoRA</div>
+<div class="pill-tag">Pre-training</div>
+<div class="pill-tag">Chain-of-Thought (CoT)</div>
+<div class="pill-tag">Adam</div>
+<div class="pill-tag">Dropout</div>
+<div class="pill-tag">Embedding</div>
+</div>
+</div>
+<!-- Category: Language -->
+<div class="category-row">
+<div class="category-title">
+<span class="material-symbols-outlined category-icon">chat_bubble_outline</span>
+                    Language
+                </div>
+<div class="methods-container">
+<div class="pill-tag">BERT</div>
+<div class="pill-tag">GPT</div>
+<div class="pill-tag">T5</div>
+<div class="pill-tag">RAG</div>
+<div class="pill-tag">Seq2Seq</div>
+<div class="pill-tag">Attention</div>
+<div class="pill-tag">Mamba-2</div>
+<div class="pill-tag">Performer</div>
+<div class="pill-tag">BLEU</div>
+<div class="pill-tag">ROUGE</div>
+<div class="pill-tag">fastText</div>
+<div class="pill-tag">Speculative Decoding</div>
+<div class="pill-tag">Sliding Window Attention</div>
+<div class="pill-tag">Gated DeltaNet</div>
+</div>
+</div>
+<!-- Category: Vision -->
+<div class="category-row">
+<div class="category-title">
+<span class="material-symbols-outlined category-icon">visibility</span>
+                    Vision
+                </div>
+<div class="methods-container">
+<div class="pill-tag">CLIP</div>
+<div class="pill-tag">LLaVA</div>
+<div class="pill-tag">Vision Transformer</div>
+<div class="pill-tag">SAM</div>
+<div class="pill-tag">DINO</div>
+<div class="pill-tag">ResNet</div>
+<div class="pill-tag">U-Net</div>
+<div class="pill-tag">ConvNeXt</div>
+<div class="pill-tag">Mask R-CNN</div>
+<div class="pill-tag">YOLO</div>
+<div class="pill-tag">NeRF</div>
+<div class="pill-tag">ViT</div>
+<div class="pill-tag">R-CNN</div>
+<div class="pill-tag">Swin Transformer</div>
+</div>
+</div>
+<!-- Category: Audio & Speech -->
+<div class="category-row">
+<div class="category-title">
+<span class="material-symbols-outlined category-icon">graphic_eq</span>
+                    Audio &amp; Speech
+                </div>
+<div class="methods-container">
+<div class="pill-tag">Whisper</div>
+<div class="pill-tag">WaveNet</div>
+<div class="pill-tag">Conformer</div>
+<div class="pill-tag">SoundStream</div>
+<div class="pill-tag">RNN-Transducer</div>
+<div class="pill-tag">Wav2Vec</div>
+<div class="pill-tag">Fast Conformer</div>
+<div class="pill-tag">Neural Audio Codec</div>
+<div class="pill-tag">Spectrogram</div>
+<div class="pill-tag">TDT</div>
+</div>
+</div>
+<!-- Category: Agents -->
+<div class="category-row">
+<div class="category-title">
+<span class="material-symbols-outlined category-icon">smart_toy</span>
+                    Agents
+                </div>
+<div class="methods-container">
+<div class="pill-tag">ReAct</div>
+<div class="pill-tag">MCP</div>
+<div class="pill-tag">Function Calling</div>
+<div class="pill-tag">Agent Skills</div>
+<div class="pill-tag">Multi-turn</div>
+<div class="pill-tag">Tool Use</div>
+<div class="pill-tag">AutoGPT</div>
+<div class="pill-tag">Agent Frameworks</div>
+<div class="pill-tag">Planning</div>
+<div class="pill-tag">Memory</div>
+</div>
+</div>
+<!-- Category: Reasoning -->
+<div class="category-row">
+<div class="category-title">
+<span class="material-symbols-outlined category-icon">psychology</span>
+                    Reasoning
+                </div>
+<div class="methods-container">
+<div class="pill-tag">Chain-of-Thought (CoT)</div>
+<div class="pill-tag">Tree of Thoughts</div>
+<div class="pill-tag">GRPO</div>
+<div class="pill-tag">Reasoning Model</div>
+<div class="pill-tag">Self-Refine</div>
+<div class="pill-tag">Reflection</div>
+<div class="pill-tag">Deep Research</div>
+<div class="pill-tag">Xavier Initialization</div>
+<div class="pill-tag">Context Rot</div>
+<div class="pill-tag">Test-time Compute</div>
+</div>
+</div>
+<!-- Category: Training -->
+<div class="category-row">
+<div class="category-title">
+<span class="material-symbols-outlined category-icon">school</span>
+                    Training
+                </div>
+<div class="methods-container">
+<div class="pill-tag">Pre-training</div>
+<div class="pill-tag">Fine-tuning</div>
+<div class="pill-tag">PEFT</div>
+<div class="pill-tag">QLoRA</div>
+<div class="pill-tag">LoRA</div>
+<div class="pill-tag">Prompt Engineering</div>
+<div class="pill-tag">Data Augmentation</div>
+<div class="pill-tag">Curriculum Learning</div>
+<div class="pill-tag">Teacher Forcing</div>
+<div class="pill-tag">Label Smoothing</div>
+</div>
+</div>
+<!-- Category: Optimization -->
+<div class="category-row">
+<div class="category-title">
+<span class="material-symbols-outlined category-icon">tune</span>
+                    Optimization
+                </div>
+<div class="methods-container">
+<div class="pill-tag">Adam</div>
+<div class="pill-tag">AdamW</div>
+<div class="pill-tag">SGD</div>
+<div class="pill-tag">Adafactor</div>
+<div class="pill-tag">Weight Decay</div>
+<div class="pill-tag">Gradient Clipping</div>
+<div class="pill-tag">Learning Rate Scheduler</div>
+<div class="pill-tag">Cosine Annealing</div>
+<div class="pill-tag">Batch Normalization</div>
+<div class="pill-tag">Dropout</div>
+</div>
+</div>
+<!-- Category: Inference -->
+<div class="category-row">
+<div class="category-title">
+<span class="material-symbols-outlined category-icon">bolt</span>
+                    Inference
+                </div>
+<div class="methods-container">
+<div class="pill-tag">KV Cache</div>
+<div class="pill-tag">Speculative Decoding</div>
+<div class="pill-tag">Sliding Window Attention</div>
+<div class="pill-tag">TTFT</div>
+<div class="pill-tag">Prefill</div>
+<div class="pill-tag">Quantization</div>
+<div class="pill-tag">Pruning</div>
+<div class="pill-tag">Distillation</div>
+<div class="pill-tag">Flash Attention</div>
+<div class="pill-tag">vLLM</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer Component -->
+<footer class="bg-surface-container-lowest border-t border-outline mt-auto w-full py-lg px-xl flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto transition-opacity duration-200">
+<div class="font-label-sm text-label-sm font-bold text-on-surface mb-md md:mb-0">
+            © 2024 Frontier Atlas Research Platform. All rights reserved.
+        </div>
+<nav class="flex gap-lg">
+<a class="text-secondary font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-secondary font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-secondary font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="text-secondary font-body-sm text-body-sm hover:text-primary transition-colors" href="#">API Status</a>
+</nav>
+</footer>
+</body></html>

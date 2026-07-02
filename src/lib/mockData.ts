@@ -287,6 +287,32 @@ export const mockMethodCategories: MethodCategory[] = [
   }
 ];
 
+export const mockPaperDetails: Record<string, any> = {
+  "paper-1": {
+    id: "paper-1",
+    arxivId: "1706.03762",
+    title: "Attention Is All You Need",
+    authors: ["Ashish Vaswani", "Noam Shazeer", "Niki Parmar", "Jakob Uszkoreit", "Llion Jones", "Aidan N. Gomez", "Łukasz Kaiser", "Illia Polosukhin"],
+    publicationDate: "2017-12-06",
+    citations: 134809,
+    pdfUrl: "https://arxiv.org/pdf/1706.03762.pdf",
+    arxivUrl: "https://arxiv.org/abs/1706.03762",
+    githubUrl: "https://github.com/tensorflow/tensor2tensor",
+    githubStars: 5700,
+    abstract: "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
+    tasks: ["Machine Translation", "Language Modeling"],
+    methods: ["Transformer", "Multi-Head Attention", "Positional Encoding"],
+    bibtex: `@inproceedings{vaswani2017attention,
+  title={Attention is all you need},
+  author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, Lukasz and Polosukhin, Illia},
+  booktitle={Advances in neural information processing systems},
+  pages={5998--6008},
+  year={2017}
+}`,
+    aiSummary: "This paper introduces the Transformer, a novel neural network architecture based entirely on attention mechanisms, dispensing with recurrence and convolutions entirely. It achieves state-of-the-art results on machine translation tasks while requiring significantly less time to train."
+  }
+};
+
 export const mockMethodDetails: Record<string, MethodDetail> = {
   "llm": {
     slug: "llm",

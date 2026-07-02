@@ -5,11 +5,6 @@ import { mockMethodCategories, mockMethodDetails } from "./mockData";
  * Simulates a network request to fetch the Methods taxonomy.
  * This is the single integration point to replace when connecting to a real backend.
  * It must return a Promise<MethodCategory[]>.
- * 
- * Example real implementation:
- * export async function getMethodsTaxonomy(): Promise<MethodCategory[]> {
- *   return fetch('https://api.example.com/methods').then(res => res.json());
- * }
  */
 export async function getMethodsTaxonomy(): Promise<MethodCategory[]> {
   return new Promise((resolve) => {
@@ -18,6 +13,7 @@ export async function getMethodsTaxonomy(): Promise<MethodCategory[]> {
     }, 500);
   });
 }
+
 export async function getMethodDetailBySlug(slug: string): Promise<MethodDetail> {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -51,6 +47,32 @@ export async function getMethodDetailBySlug(slug: string): Promise<MethodDetail>
               citations: 890,
             },
           ],
+        });
+      }
+    }, 500);
+  });
+}
+
+export async function getPaperDetailById(id: string): Promise<any> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // Import here to avoid circular dependencies if needed, or rely on global
+      const { mockPaperDetails } = require('./mockData');
+      if (mockPaperDetails[id]) {
+        resolve(mockPaperDetails[id]);
+      } else {
+        // Fallback for unknown papers
+        resolve({
+          id,
+          title: `Research Paper: ${id}`,
+          authors: ["Unknown Author"],
+          publicationDate: "2024-01-01",
+          citations: 0,
+          abstract: "Abstract not available for this mock paper.",
+          tasks: ["Unknown Task"],
+          methods: ["Unknown Method"],
+          bibtex: "Not available",
+          aiSummary: "Summary not available."
         });
       }
     }, 500);

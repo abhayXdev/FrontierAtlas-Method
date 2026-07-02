@@ -12,6 +12,8 @@ interface ExpandableDescriptionProps {
 export function ExpandableDescription({ text, maxLength = 250, className }: ExpandableDescriptionProps) {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
+  if (!text) return null;
+
   if (text.length <= maxLength) {
     return <p className={className}>{text}</p>;
   }

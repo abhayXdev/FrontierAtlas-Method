@@ -33,3 +33,21 @@ export interface MethodDetail {
   sourceUrl?: string;
   architectureUrl?: string;
 }
+
+export interface PaperDetail {
+  id: string;
+  arxivId?: string;
+  title: string;
+  authors: string[];
+  publicationDate: string;
+  citations: number;
+  pdfUrl?: string;
+  arxivUrl?: string;
+  githubUrl?: string;
+  githubStars?: number;
+  abstract: string;
+  tasks: string[];
+  methods: string[];
+  bibtex: string;
+  aiSummary: string;
+}

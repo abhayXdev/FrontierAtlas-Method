@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transformer - Frontier Atlas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#fffbff",
+                        "tertiary": "#5c5d51",
+                        "surface-tint": "#b32b00",
+                        "on-primary-fixed": "#3c0800",
+                        "on-secondary-fixed-variant": "#45474b",
+                        "surface-bright": "#fafaf5",
+                        "on-secondary-container": "#616267",
+                        "surface-container": "#eeeee9",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e8e8e3",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#c8c7b9",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2f312e",
+                        "background": "#fafaf5",
+                        "surface-container-highest": "#e3e3de",
+                        "secondary-container": "#dfdfe4",
+                        "on-tertiary-fixed-variant": "#47473d",
+                        "surface-container-low": "#f4f4ef",
+                        "surface-dim": "#dadad5",
+                        "outline": "#926f66",
+                        "primary-fixed": "#ffdbd2",
+                        "on-surface-variant": "#5d4038",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#1a1c1f",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e3e3de",
+                        "outline-variant": "#e7bdb3",
+                        "primary-container": "#da3600",
+                        "primary-fixed-dim": "#ffb4a1",
+                        "inverse-primary": "#ffb4a1",
+                        "secondary-fixed": "#e2e2e7",
+                        "on-primary-fixed-variant": "#891e00",
+                        "primary": "#ae2900",
+                        "inverse-on-surface": "#f1f1ec",
+                        "on-tertiary-container": "#fffdee",
+                        "tertiary-container": "#757569",
+                        "secondary-fixed-dim": "#c6c6cb",
+                        "on-primary": "#ffffff",
+                        "surface": "#fafaf5",
+                        "tertiary-fixed": "#e5e3d4",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1a1c19",
+                        "on-tertiary-fixed": "#1b1c13",
+                        "on-background": "#1a1c19",
+                        "secondary": "#5d5e63",
+                        "brand-accent": "#F43E01",
+                        "brand-base": "#F3F3EE",
+                        "brand-surface": "#FFFFFF",
+                        "brand-border": "#E1E1D7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "2xl": "64px",
+                        "gutter": "20px",
+                        "unit": "4px",
+                        "xl": "40px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["13px", { "lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "label-sm": ["11px", { "lineHeight": "1", "letterSpacing": "0.03em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #F3F3EE; }
+        .border-hairline { border-color: #E1E1D7; }
+        .text-brand-accent { color: #F43E01; }
+        .bg-brand-accent { background-color: #F43E01; }
+        .hover-bg-subtle:hover { background-color: #E8E8DE; }
+    </style>
+</head>
+<body class="font-body-md text-on-surface antialiased bg-[#F3F3EE]">
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant fixed top-0 w-full z-50 flex justify-between items-center px-xl h-16 mx-auto bg-brand-surface border-hairline">
+<div class="flex items-center gap-md">
+<span class="font-display text-headline-md tracking-tighter text-brand-accent dark:text-primary-fixed-dim font-bold">FA</span>
+<span class="font-display text-headline-md tracking-tighter text-primary dark:text-primary-fixed-dim font-bold ml-1">Frontier Atlas</span>
+</div>
+<div class="hidden md:flex flex-1 max-w-2xl mx-lg relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-sm">search</span>
+<input class="w-full pl-10 pr-12 py-2 bg-[#F3F3EE] border border-transparent focus:border-brand-accent focus:bg-white rounded-md text-sm outline-none transition-colors" placeholder="Search papers, authors, topics, benchmarks..." type="text"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-secondary text-xs border border-gray-300 rounded px-1.5 py-0.5 bg-white">
+<span class="material-symbols-outlined text-[10px]">keyboard_command_key</span>
+<span>K</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-lg">
+<a class="text-secondary dark:text-secondary-fixed-dim font-medium hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out cursor-pointer font-body-sm text-body-sm" href="#">Explore</a>
+<a class="text-secondary dark:text-secondary-fixed-dim font-medium hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out cursor-pointer font-body-sm text-body-sm" href="#">Rankings</a>
+<a class="text-secondary dark:text-secondary-fixed-dim font-medium hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out cursor-pointer font-body-sm text-body-sm" href="#">Tasks</a>
+<a class="text-brand-accent dark:text-primary-fixed-dim font-semibold border-b-2 border-[#F43E01] pb-1 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out cursor-pointer font-body-sm text-body-sm" href="#">Methods</a>
+<a class="text-secondary dark:text-secondary-fixed-dim font-medium hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 ease-in-out cursor-pointer font-body-sm text-body-sm" href="#">About</a>
+<div class="h-6 w-px bg-gray-300 mx-2"></div>
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">bookmark_border</span>
+</button>
+<button class="w-8 h-8 rounded-full border border-brand-accent text-brand-accent flex items-center justify-center font-medium text-sm">
+                JP
+            </button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-24 pb-2xl px-xl max-w-container-max mx-auto min-h-screen">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-secondary mb-xl">
+<a class="hover:text-primary transition-colors" href="#">Methods</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Language</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-medium">Transformer</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Left Column (Content) -->
+<div class="lg:col-span-8 flex flex-col gap-xl">
+<!-- Hero Section -->
+<div>
+<h4 class="font-label-sm text-label-sm text-secondary tracking-widest uppercase mb-2">Method</h4>
+<h1 class="font-display text-display text-on-surface mb-4">Transformer</h1>
+<p class="font-body-lg text-body-lg text-secondary mb-6 max-w-3xl">
+                        A neural network architecture that relies entirely on an attention mechanism to draw global dependencies between input and output, dispensing with recurrence and convolutions entirely.
+                    </p>
+<!-- Main Paper Card -->
+<div class="bg-brand-surface border border-hairline rounded-lg p-md flex flex-col gap-sm">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm bg-gray-100 text-gray-600 px-2 py-0.5 rounded">PAPER</span>
+<span class="font-label-sm text-label-sm bg-black text-white px-2 py-0.5 rounded">OFFICIAL</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-semibold text-on-surface mt-1">Attention Is All You Need</h3>
+<p class="font-body-sm text-body-sm text-secondary">Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, Illia Polosukhin</p>
+</div>
+<span class="font-label-md text-label-md font-medium text-secondary">2017</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-2 line-clamp-2">
+                            The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms...
+                        </p>
+<div class="flex items-center gap-4 mt-2">
+<a class="flex items-center gap-1 font-label-sm text-label-sm text-brand-accent hover:underline" href="#">
+<span class="material-symbols-outlined text-[14px]">picture_as_pdf</span> PDF
+                            </a>
+<a class="flex items-center gap-1 font-label-sm text-label-sm text-secondary hover:text-primary" href="#">
+<span class="material-symbols-outlined text-[14px]">code</span> Code
+                            </a>
+</div>
+</div>
+</div>
+<!-- Metrics Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-brand-surface border border-hairline rounded-lg p-md flex flex-col items-center justify-center text-center">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mb-2">Papers Using</span>
+<span class="font-headline-lg text-headline-lg font-semibold text-on-surface">15,420</span>
+</div>
+<div class="bg-brand-surface border border-hairline rounded-lg p-md flex flex-col items-center justify-center text-center">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mb-2">Introduced</span>
+<span class="font-headline-lg text-headline-lg font-semibold text-on-surface">2017</span>
+</div>
+<div class="bg-brand-surface border border-hairline rounded-lg p-md flex flex-col items-center justify-center text-center">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mb-2">Components</span>
+<span class="font-headline-lg text-headline-lg font-semibold text-on-surface">6</span>
+</div>
+<div class="bg-brand-surface border border-hairline rounded-lg p-md flex flex-col items-center justify-center text-center">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mb-2">Repos</span>
+<span class="font-headline-lg text-headline-lg font-semibold text-on-surface">4,281</span>
+</div>
+</div>
+<!-- Usage Trend Chart (Visual Placeholder) -->
+<div class="bg-brand-surface border border-hairline rounded-lg p-md">
+<h4 class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mb-6">Usage Trend</h4>
+<div class="h-48 w-full bg-gradient-to-t from-blue-50 to-white relative flex items-end">
+<svg class="w-full h-full absolute inset-0" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M0,100 L0,80 Q25,75 50,60 T100,20 L100,100 Z" fill="rgba(59, 130, 246, 0.1)" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2"></path>
+</svg>
+<div class="w-full flex justify-between font-label-sm text-label-sm text-secondary z-10 pb-1 px-1">
+<span>2017</span>
+<span>2020</span>
+<span>2024 (Est.)</span>
+</div>
+</div>
+</div>
+<!-- SOTA Results Table -->
+<div class="bg-brand-surface border border-hairline rounded-lg overflow-hidden">
+<div class="p-md border-b border-hairline bg-[#F3F3EE]/50">
+<h4 class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">State of the Art Results</h4>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#E8E8DE]/30 border-b border-hairline">
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider font-medium">Dataset</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider font-medium">Task</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider font-medium">Metric</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider font-medium">Score</th>
+<th class="py-3 px-4 font-label-sm text-label-sm text-secondary uppercase tracking-wider font-medium">Model</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<tr class="border-b border-hairline hover-bg-subtle transition-colors">
+<td class="py-3 px-4 font-medium text-on-surface">WMT 2014 English-German</td>
+<td class="py-3 px-4 text-secondary">Machine Translation</td>
+<td class="py-3 px-4 text-secondary">BLEU</td>
+<td class="py-3 px-4 text-brand-accent font-medium">28.4</td>
+<td class="py-3 px-4 text-secondary">Transformer (big)</td>
+</tr>
+<tr class="border-b border-hairline hover-bg-subtle transition-colors">
+<td class="py-3 px-4 font-medium text-on-surface">WMT 2014 English-French</td>
+<td class="py-3 px-4 text-secondary">Machine Translation</td>
+<td class="py-3 px-4 text-secondary">BLEU</td>
+<td class="py-3 px-4 text-brand-accent font-medium">41.8</td>
+<td class="py-3 px-4 text-secondary">Transformer (big)</td>
+</tr>
+<tr class="border-b border-hairline hover-bg-subtle transition-colors">
+<td class="py-3 px-4 font-medium text-on-surface">GLUE</td>
+<td class="py-3 px-4 text-secondary">Language Understanding</td>
+<td class="py-3 px-4 text-secondary">Score</td>
+<td class="py-3 px-4 text-brand-accent font-medium">91.3</td>
+<td class="py-3 px-4 text-secondary">DeBERTaV3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 text-center border-t border-hairline hover-bg-subtle transition-colors cursor-pointer">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider flex items-center justify-center gap-1">View All 42 Results <span class="material-symbols-outlined text-[14px]">expand_more</span></span>
+</div>
+</div>
+<!-- Related Methods -->
+<div>
+<h4 class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mb-4">Related Methods</h4>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 border border-hairline rounded-full font-label-sm text-label-sm text-brand-accent bg-white cursor-pointer hover-bg-subtle">Self-Attention</span>
+<span class="px-3 py-1.5 border border-hairline rounded-full font-label-sm text-label-sm text-brand-accent bg-white cursor-pointer hover-bg-subtle">Multi-Head Attention</span>
+<span class="px-3 py-1.5 border border-hairline rounded-full font-label-sm text-label-sm text-brand-accent bg-white cursor-pointer hover-bg-subtle">Layer Normalization</span>
+<span class="px-3 py-1.5 border border-hairline rounded-full font-label-sm text-label-sm text-secondary bg-white cursor-pointer hover-bg-subtle">BERT</span>
+<span class="px-3 py-1.5 border border-hairline rounded-full font-label-sm text-label-sm text-secondary bg-white cursor-pointer hover-bg-subtle">GPT</span>
+</div>
+</div>
+</div>
+<!-- Right Column (Sidebar) -->
+<div class="lg:col-span-4 flex flex-col gap-xl">
+<!-- Architecture Diagram -->
+<div class="bg-brand-surface border border-hairline rounded-lg p-md sticky top-24">
+<h4 class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mb-6">Architecture</h4>
+<div class="flex flex-col items-center gap-4 py-4 border border-hairline rounded bg-[#F3F3EE]/30">
+<div class="w-4/5 grid grid-cols-2 gap-4">
+<div class="border border-hairline bg-white rounded p-3 text-center font-label-sm text-label-sm text-secondary">Encoder Block</div>
+<div class="border border-hairline bg-white rounded p-3 text-center font-label-sm text-label-sm text-secondary">Decoder Block</div>
+<div class="border border-hairline bg-white rounded p-3 text-center font-label-sm text-label-sm text-secondary">Encoder Block</div>
+<div class="border border-hairline bg-white rounded p-3 text-center font-label-sm text-label-sm text-secondary">Decoder Block</div>
+<div class="text-center font-bold text-secondary">⋮</div>
+<div class="text-center font-bold text-secondary">⋮</div>
+<div class="border border-hairline bg-white rounded p-3 text-center font-label-sm text-label-sm text-secondary">Encoder Block</div>
+<div class="border border-hairline bg-white rounded p-3 text-center font-label-sm text-label-sm text-secondary">Decoder Block</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-hairline text-center">
+<a class="font-label-sm text-label-sm text-secondary hover:text-brand-accent break-all" href="#">https://arxiv.org/abs/1706.03762</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant dark:border-outline-variant w-full py-lg px-xl flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto bg-brand-surface border-hairline">
+<div class="font-label-sm text-label-sm font-bold text-on-surface mb-4 md:mb-0">
+            FA
+        </div>
+<div class="font-body-sm text-body-sm text-secondary">
+            © 2024 Frontier Atlas Research Platform. All rights reserved.
+        </div>
+<div class="flex gap-md font-body-sm text-body-sm mt-4 md:mt-0">
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-opacity duration-200" href="#">Privacy Policy</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-opacity duration-200" href="#">Terms of Service</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-opacity duration-200" href="#">Documentation</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-opacity duration-200" href="#">API Status</a>
+</div>
+</footer>
+</body></html>
